@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageCamion = new System.Windows.Forms.TabPage();
             this.buttonCamionDelete = new System.Windows.Forms.Button();
@@ -58,32 +57,37 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.camionBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.empresaPaqueteriaDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.camionBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabPageChoferCamion = new System.Windows.Forms.TabPage();
+            this.buttonAsignarCamion_Liberar = new System.Windows.Forms.Button();
+            this.buttonAsignarCamion_Filtrar = new System.Windows.Forms.Button();
+            this.buttonAsignarCamion_Submit = new System.Windows.Forms.Button();
+            this.checkBoxAsignarCamion_MostrarLibres = new System.Windows.Forms.CheckBox();
+            this.dataGridViewAsignarCamion = new System.Windows.Forms.DataGridView();
+            this.label7 = new System.Windows.Forms.Label();
+            this.comboBoxAsignarCamion_ChoferId = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBoxAsignarCamion_CamionId = new System.Windows.Forms.ComboBox();
             this.tabPagePaquete = new System.Windows.Forms.TabPage();
+            this.buttonPaqueteAsignar = new System.Windows.Forms.Button();
+            this.buttonPaqueteFiltrar = new System.Windows.Forms.Button();
+            this.buttonPaqueteApañadir = new System.Windows.Forms.Button();
+            this.dataGridViewPaquete = new System.Windows.Forms.DataGridView();
+            this.checkBoxPaqueteAsignados = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.comboBoxPaqueteProvincia = new System.Windows.Forms.ComboBox();
+            this.textBoxPaqueteProducto = new System.Windows.Forms.TextBox();
             this.tabPageLote = new System.Windows.Forms.TabPage();
             this.tabPageEnvio = new System.Windows.Forms.TabPage();
-            this.comboBoxAsignarCamion_CamionId = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.comboBoxAsignarCamion_ChoferId = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.dataGridViewAsignarCamion = new System.Windows.Forms.DataGridView();
-            this.checkBoxAsignarCamion_MostrarLibres = new System.Windows.Forms.CheckBox();
-            this.buttonAsignarCamion_Submit = new System.Windows.Forms.Button();
-            this.buttonAsignarCamion_Filtrar = new System.Windows.Forms.Button();
-            this.buttonAsignarCamion_Liberar = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPageCamion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCamion)).BeginInit();
             this.tabPageChofer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewChofer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.camionBindingSource1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.empresaPaqueteriaDataSetBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.camionBindingSource)).BeginInit();
             this.tabPageChoferCamion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAsignarCamion)).BeginInit();
+            this.tabPagePaquete.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPaquete)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -153,7 +157,6 @@
             this.buttonCamionSubmit.TabIndex = 4;
             this.buttonCamionSubmit.Text = "Añadir";
             this.buttonCamionSubmit.UseVisualStyleBackColor = true;
-            this.buttonCamionSubmit.Click += new System.EventHandler(this.buttonCamionSubmit_Click);
             // 
             // dataGridViewCamion
             // 
@@ -429,8 +432,118 @@
             this.tabPageChoferCamion.Text = "Asignacion de camion";
             this.tabPageChoferCamion.UseVisualStyleBackColor = true;
             // 
+            // buttonAsignarCamion_Liberar
+            // 
+            this.buttonAsignarCamion_Liberar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAsignarCamion_Liberar.Location = new System.Drawing.Point(731, 348);
+            this.buttonAsignarCamion_Liberar.Name = "buttonAsignarCamion_Liberar";
+            this.buttonAsignarCamion_Liberar.Size = new System.Drawing.Size(313, 43);
+            this.buttonAsignarCamion_Liberar.TabIndex = 4;
+            this.buttonAsignarCamion_Liberar.Text = "Liberar";
+            this.buttonAsignarCamion_Liberar.UseVisualStyleBackColor = true;
+            this.buttonAsignarCamion_Liberar.Click += new System.EventHandler(this.buttonAsignarCamion_Liberar_Click);
+            // 
+            // buttonAsignarCamion_Filtrar
+            // 
+            this.buttonAsignarCamion_Filtrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAsignarCamion_Filtrar.Location = new System.Drawing.Point(314, 348);
+            this.buttonAsignarCamion_Filtrar.Name = "buttonAsignarCamion_Filtrar";
+            this.buttonAsignarCamion_Filtrar.Size = new System.Drawing.Size(313, 43);
+            this.buttonAsignarCamion_Filtrar.TabIndex = 4;
+            this.buttonAsignarCamion_Filtrar.Text = "Filtrar";
+            this.buttonAsignarCamion_Filtrar.UseVisualStyleBackColor = true;
+            this.buttonAsignarCamion_Filtrar.Click += new System.EventHandler(this.buttonAsignarCamion_Filtrar_Click);
+            // 
+            // buttonAsignarCamion_Submit
+            // 
+            this.buttonAsignarCamion_Submit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAsignarCamion_Submit.Location = new System.Drawing.Point(10, 348);
+            this.buttonAsignarCamion_Submit.Name = "buttonAsignarCamion_Submit";
+            this.buttonAsignarCamion_Submit.Size = new System.Drawing.Size(249, 43);
+            this.buttonAsignarCamion_Submit.TabIndex = 4;
+            this.buttonAsignarCamion_Submit.Text = "Añadir";
+            this.buttonAsignarCamion_Submit.UseVisualStyleBackColor = true;
+            this.buttonAsignarCamion_Submit.Click += new System.EventHandler(this.buttonAsignarCamion_Submit_Click);
+            // 
+            // checkBoxAsignarCamion_MostrarLibres
+            // 
+            this.checkBoxAsignarCamion_MostrarLibres.AutoSize = true;
+            this.checkBoxAsignarCamion_MostrarLibres.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxAsignarCamion_MostrarLibres.Location = new System.Drawing.Point(607, 6);
+            this.checkBoxAsignarCamion_MostrarLibres.Name = "checkBoxAsignarCamion_MostrarLibres";
+            this.checkBoxAsignarCamion_MostrarLibres.Size = new System.Drawing.Size(181, 28);
+            this.checkBoxAsignarCamion_MostrarLibres.TabIndex = 3;
+            this.checkBoxAsignarCamion_MostrarLibres.Text = "Mostrar solo libres";
+            this.checkBoxAsignarCamion_MostrarLibres.UseVisualStyleBackColor = true;
+            this.checkBoxAsignarCamion_MostrarLibres.CheckedChanged += new System.EventHandler(this.checkBoxAsignarCamion_MostrarLibres_CheckedChanged);
+            // 
+            // dataGridViewAsignarCamion
+            // 
+            this.dataGridViewAsignarCamion.AllowUserToAddRows = false;
+            this.dataGridViewAsignarCamion.AllowUserToDeleteRows = false;
+            this.dataGridViewAsignarCamion.AllowUserToOrderColumns = true;
+            this.dataGridViewAsignarCamion.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewAsignarCamion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewAsignarCamion.Location = new System.Drawing.Point(282, 40);
+            this.dataGridViewAsignarCamion.Name = "dataGridViewAsignarCamion";
+            this.dataGridViewAsignarCamion.ReadOnly = true;
+            this.dataGridViewAsignarCamion.Size = new System.Drawing.Size(825, 302);
+            this.dataGridViewAsignarCamion.TabIndex = 2;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(6, 244);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(91, 24);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "Chofer_id";
+            // 
+            // comboBoxAsignarCamion_ChoferId
+            // 
+            this.comboBoxAsignarCamion_ChoferId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxAsignarCamion_ChoferId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.comboBoxAsignarCamion_ChoferId.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxAsignarCamion_ChoferId.FormattingEnabled = true;
+            this.comboBoxAsignarCamion_ChoferId.Location = new System.Drawing.Point(138, 241);
+            this.comboBoxAsignarCamion_ChoferId.Name = "comboBoxAsignarCamion_ChoferId";
+            this.comboBoxAsignarCamion_ChoferId.Size = new System.Drawing.Size(121, 32);
+            this.comboBoxAsignarCamion_ChoferId.TabIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(6, 94);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(105, 24);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Camion_id:";
+            // 
+            // comboBoxAsignarCamion_CamionId
+            // 
+            this.comboBoxAsignarCamion_CamionId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxAsignarCamion_CamionId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.comboBoxAsignarCamion_CamionId.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxAsignarCamion_CamionId.FormattingEnabled = true;
+            this.comboBoxAsignarCamion_CamionId.Location = new System.Drawing.Point(138, 91);
+            this.comboBoxAsignarCamion_CamionId.Name = "comboBoxAsignarCamion_CamionId";
+            this.comboBoxAsignarCamion_CamionId.Size = new System.Drawing.Size(121, 32);
+            this.comboBoxAsignarCamion_CamionId.TabIndex = 0;
+            // 
             // tabPagePaquete
             // 
+            this.tabPagePaquete.Controls.Add(this.buttonPaqueteAsignar);
+            this.tabPagePaquete.Controls.Add(this.buttonPaqueteFiltrar);
+            this.tabPagePaquete.Controls.Add(this.buttonPaqueteApañadir);
+            this.tabPagePaquete.Controls.Add(this.dataGridViewPaquete);
+            this.tabPagePaquete.Controls.Add(this.checkBoxPaqueteAsignados);
+            this.tabPagePaquete.Controls.Add(this.label9);
+            this.tabPagePaquete.Controls.Add(this.label8);
+            this.tabPagePaquete.Controls.Add(this.comboBoxPaqueteProvincia);
+            this.tabPagePaquete.Controls.Add(this.textBoxPaqueteProducto);
+            this.tabPagePaquete.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPagePaquete.Location = new System.Drawing.Point(4, 25);
             this.tabPagePaquete.Name = "tabPagePaquete";
             this.tabPagePaquete.Padding = new System.Windows.Forms.Padding(3);
@@ -438,6 +551,102 @@
             this.tabPagePaquete.TabIndex = 3;
             this.tabPagePaquete.Text = "Paquete";
             this.tabPagePaquete.UseVisualStyleBackColor = true;
+            // 
+            // buttonPaqueteAsignar
+            // 
+            this.buttonPaqueteAsignar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonPaqueteAsignar.Location = new System.Drawing.Point(747, 347);
+            this.buttonPaqueteAsignar.Name = "buttonPaqueteAsignar";
+            this.buttonPaqueteAsignar.Size = new System.Drawing.Size(322, 44);
+            this.buttonPaqueteAsignar.TabIndex = 5;
+            this.buttonPaqueteAsignar.Text = "Asignar";
+            this.buttonPaqueteAsignar.UseVisualStyleBackColor = true;
+            this.buttonPaqueteAsignar.Click += new System.EventHandler(this.buttonPaqueteAsignar_Click);
+            // 
+            // buttonPaqueteFiltrar
+            // 
+            this.buttonPaqueteFiltrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonPaqueteFiltrar.Location = new System.Drawing.Point(268, 347);
+            this.buttonPaqueteFiltrar.Name = "buttonPaqueteFiltrar";
+            this.buttonPaqueteFiltrar.Size = new System.Drawing.Size(322, 44);
+            this.buttonPaqueteFiltrar.TabIndex = 5;
+            this.buttonPaqueteFiltrar.Text = "Filtrar";
+            this.buttonPaqueteFiltrar.UseVisualStyleBackColor = true;
+            // 
+            // buttonPaqueteApañadir
+            // 
+            this.buttonPaqueteApañadir.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonPaqueteApañadir.Location = new System.Drawing.Point(6, 347);
+            this.buttonPaqueteApañadir.Name = "buttonPaqueteApañadir";
+            this.buttonPaqueteApañadir.Size = new System.Drawing.Size(218, 44);
+            this.buttonPaqueteApañadir.TabIndex = 5;
+            this.buttonPaqueteApañadir.Text = "añadir";
+            this.buttonPaqueteApañadir.UseVisualStyleBackColor = true;
+            this.buttonPaqueteApañadir.Click += new System.EventHandler(this.buttonPaqueteApañadir_Click);
+            // 
+            // dataGridViewPaquete
+            // 
+            this.dataGridViewPaquete.AllowUserToAddRows = false;
+            this.dataGridViewPaquete.AllowUserToDeleteRows = false;
+            this.dataGridViewPaquete.AllowUserToOrderColumns = true;
+            this.dataGridViewPaquete.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewPaquete.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewPaquete.Location = new System.Drawing.Point(230, 40);
+            this.dataGridViewPaquete.Name = "dataGridViewPaquete";
+            this.dataGridViewPaquete.ReadOnly = true;
+            this.dataGridViewPaquete.Size = new System.Drawing.Size(877, 301);
+            this.dataGridViewPaquete.TabIndex = 4;
+            // 
+            // checkBoxPaqueteAsignados
+            // 
+            this.checkBoxPaqueteAsignados.AutoSize = true;
+            this.checkBoxPaqueteAsignados.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxPaqueteAsignados.Location = new System.Drawing.Point(602, 6);
+            this.checkBoxPaqueteAsignados.Name = "checkBoxPaqueteAsignados";
+            this.checkBoxPaqueteAsignados.Size = new System.Drawing.Size(182, 28);
+            this.checkBoxPaqueteAsignados.TabIndex = 3;
+            this.checkBoxPaqueteAsignados.Text = "Mostrar asignados";
+            this.checkBoxPaqueteAsignados.UseVisualStyleBackColor = true;
+            this.checkBoxPaqueteAsignados.CheckedChanged += new System.EventHandler(this.checkBoxPaqueteNoAsignados_CheckedChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(6, 225);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(91, 24);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "provincia:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(6, 91);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(90, 24);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "producto:";
+            // 
+            // comboBoxPaqueteProvincia
+            // 
+            this.comboBoxPaqueteProvincia.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxPaqueteProvincia.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.comboBoxPaqueteProvincia.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxPaqueteProvincia.FormattingEnabled = true;
+            this.comboBoxPaqueteProvincia.Location = new System.Drawing.Point(103, 222);
+            this.comboBoxPaqueteProvincia.Name = "comboBoxPaqueteProvincia";
+            this.comboBoxPaqueteProvincia.Size = new System.Drawing.Size(121, 32);
+            this.comboBoxPaqueteProvincia.TabIndex = 1;
+            // 
+            // textBoxPaqueteProducto
+            // 
+            this.textBoxPaqueteProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxPaqueteProducto.Location = new System.Drawing.Point(102, 91);
+            this.textBoxPaqueteProducto.Name = "textBoxPaqueteProducto";
+            this.textBoxPaqueteProducto.Size = new System.Drawing.Size(122, 29);
+            this.textBoxPaqueteProducto.TabIndex = 0;
             // 
             // tabPageLote
             // 
@@ -459,102 +668,6 @@
             this.tabPageEnvio.Text = "Envio";
             this.tabPageEnvio.UseVisualStyleBackColor = true;
             // 
-            // comboBoxAsignarCamion_CamionId
-            // 
-            this.comboBoxAsignarCamion_CamionId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxAsignarCamion_CamionId.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxAsignarCamion_CamionId.FormattingEnabled = true;
-            this.comboBoxAsignarCamion_CamionId.Location = new System.Drawing.Point(138, 91);
-            this.comboBoxAsignarCamion_CamionId.Name = "comboBoxAsignarCamion_CamionId";
-            this.comboBoxAsignarCamion_CamionId.Size = new System.Drawing.Size(121, 32);
-            this.comboBoxAsignarCamion_CamionId.TabIndex = 0;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(6, 94);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(105, 24);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Camion_id:";
-            // 
-            // comboBoxAsignarCamion_ChoferId
-            // 
-            this.comboBoxAsignarCamion_ChoferId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxAsignarCamion_ChoferId.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxAsignarCamion_ChoferId.FormattingEnabled = true;
-            this.comboBoxAsignarCamion_ChoferId.Location = new System.Drawing.Point(138, 241);
-            this.comboBoxAsignarCamion_ChoferId.Name = "comboBoxAsignarCamion_ChoferId";
-            this.comboBoxAsignarCamion_ChoferId.Size = new System.Drawing.Size(121, 32);
-            this.comboBoxAsignarCamion_ChoferId.TabIndex = 0;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(6, 244);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(91, 24);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "Chofer_id";
-            // 
-            // dataGridViewAsignarCamion
-            // 
-            this.dataGridViewAsignarCamion.AllowUserToAddRows = false;
-            this.dataGridViewAsignarCamion.AllowUserToDeleteRows = false;
-            this.dataGridViewAsignarCamion.AllowUserToOrderColumns = true;
-            this.dataGridViewAsignarCamion.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewAsignarCamion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewAsignarCamion.Location = new System.Drawing.Point(282, 40);
-            this.dataGridViewAsignarCamion.Name = "dataGridViewAsignarCamion";
-            this.dataGridViewAsignarCamion.ReadOnly = true;
-            this.dataGridViewAsignarCamion.Size = new System.Drawing.Size(825, 302);
-            this.dataGridViewAsignarCamion.TabIndex = 2;
-            // 
-            // checkBoxAsignarCamion_MostrarLibres
-            // 
-            this.checkBoxAsignarCamion_MostrarLibres.AutoSize = true;
-            this.checkBoxAsignarCamion_MostrarLibres.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxAsignarCamion_MostrarLibres.Location = new System.Drawing.Point(607, 6);
-            this.checkBoxAsignarCamion_MostrarLibres.Name = "checkBoxAsignarCamion_MostrarLibres";
-            this.checkBoxAsignarCamion_MostrarLibres.Size = new System.Drawing.Size(181, 28);
-            this.checkBoxAsignarCamion_MostrarLibres.TabIndex = 3;
-            this.checkBoxAsignarCamion_MostrarLibres.Text = "Mostrar solo libres";
-            this.checkBoxAsignarCamion_MostrarLibres.UseVisualStyleBackColor = true;
-            this.checkBoxAsignarCamion_MostrarLibres.CheckedChanged += new System.EventHandler(this.checkBoxAsignarCamion_MostrarLibres_CheckedChanged);
-            // 
-            // buttonAsignarCamion_Submit
-            // 
-            this.buttonAsignarCamion_Submit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonAsignarCamion_Submit.Location = new System.Drawing.Point(10, 348);
-            this.buttonAsignarCamion_Submit.Name = "buttonAsignarCamion_Submit";
-            this.buttonAsignarCamion_Submit.Size = new System.Drawing.Size(249, 43);
-            this.buttonAsignarCamion_Submit.TabIndex = 4;
-            this.buttonAsignarCamion_Submit.Text = "Añadir";
-            this.buttonAsignarCamion_Submit.UseVisualStyleBackColor = true;
-            this.buttonAsignarCamion_Submit.Click += new System.EventHandler(this.buttonAsignarCamion_Submit_Click);
-            // 
-            // buttonAsignarCamion_Filtrar
-            // 
-            this.buttonAsignarCamion_Filtrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonAsignarCamion_Filtrar.Location = new System.Drawing.Point(314, 348);
-            this.buttonAsignarCamion_Filtrar.Name = "buttonAsignarCamion_Filtrar";
-            this.buttonAsignarCamion_Filtrar.Size = new System.Drawing.Size(313, 43);
-            this.buttonAsignarCamion_Filtrar.TabIndex = 4;
-            this.buttonAsignarCamion_Filtrar.Text = "Filtrar";
-            this.buttonAsignarCamion_Filtrar.UseVisualStyleBackColor = true;
-            // 
-            // buttonAsignarCamion_Liberar
-            // 
-            this.buttonAsignarCamion_Liberar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonAsignarCamion_Liberar.Location = new System.Drawing.Point(731, 348);
-            this.buttonAsignarCamion_Liberar.Name = "buttonAsignarCamion_Liberar";
-            this.buttonAsignarCamion_Liberar.Size = new System.Drawing.Size(313, 43);
-            this.buttonAsignarCamion_Liberar.TabIndex = 4;
-            this.buttonAsignarCamion_Liberar.Text = "Liberar";
-            this.buttonAsignarCamion_Liberar.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -571,12 +684,12 @@
             this.tabPageChofer.ResumeLayout(false);
             this.tabPageChofer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewChofer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.camionBindingSource1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.empresaPaqueteriaDataSetBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.camionBindingSource)).EndInit();
             this.tabPageChoferCamion.ResumeLayout(false);
             this.tabPageChoferCamion.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAsignarCamion)).EndInit();
+            this.tabPagePaquete.ResumeLayout(false);
+            this.tabPagePaquete.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPaquete)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -597,9 +710,6 @@
         private System.Windows.Forms.Button buttonCamionDelete;
         private System.Windows.Forms.Button buttonCamionFiltrar;
         private System.Windows.Forms.Button buttonCamionSubmit;
-        private System.Windows.Forms.BindingSource empresaPaqueteriaDataSetBindingSource;
-        private System.Windows.Forms.BindingSource camionBindingSource;
-        private System.Windows.Forms.BindingSource camionBindingSource1;
         private System.Windows.Forms.TextBox textBoxChoferDni;
         private System.Windows.Forms.TextBox textBoxChoferTelefono;
         private System.Windows.Forms.TextBox textBoxChoferApellido2;
@@ -628,6 +738,15 @@
         private System.Windows.Forms.Button buttonAsignarCamion_Liberar;
         private System.Windows.Forms.Button buttonAsignarCamion_Filtrar;
         private System.Windows.Forms.Button buttonAsignarCamion_Submit;
+        private System.Windows.Forms.TextBox textBoxPaqueteProducto;
+        private System.Windows.Forms.ComboBox comboBoxPaqueteProvincia;
+        private System.Windows.Forms.Button buttonPaqueteApañadir;
+        private System.Windows.Forms.DataGridView dataGridViewPaquete;
+        private System.Windows.Forms.CheckBox checkBoxPaqueteAsignados;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button buttonPaqueteAsignar;
+        private System.Windows.Forms.Button buttonPaqueteFiltrar;
     }
 }
 
