@@ -28,116 +28,136 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.radioButtonCamionFiltrarMarca = new System.Windows.Forms.RadioButton();
+            this.radioButtonCamionFiltrarModelo = new System.Windows.Forms.RadioButton();
+            this.radioButtonCamionFiltrarMatricula = new System.Windows.Forms.RadioButton();
+            this.textBoxCamionFiltrar = new System.Windows.Forms.TextBox();
+            this.checkBoxCamionFiltrar = new System.Windows.Forms.CheckBox();
+            this.dataGridViewCamionFiltrar = new System.Windows.Forms.DataGridView();
+            this.buttonCamionFiltrarSubmit = new System.Windows.Forms.Button();
+            this.buttonAltaBaja = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCamionFiltrar)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // radioButton1
+            // radioButtonCamionFiltrarMarca
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(71, 101);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(80, 28);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Marca";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButtonCamionFiltrarMarca.AutoSize = true;
+            this.radioButtonCamionFiltrarMarca.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonCamionFiltrarMarca.Location = new System.Drawing.Point(33, 19);
+            this.radioButtonCamionFiltrarMarca.Name = "radioButtonCamionFiltrarMarca";
+            this.radioButtonCamionFiltrarMarca.Size = new System.Drawing.Size(80, 28);
+            this.radioButtonCamionFiltrarMarca.TabIndex = 0;
+            this.radioButtonCamionFiltrarMarca.Text = "Marca";
+            this.radioButtonCamionFiltrarMarca.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // radioButtonCamionFiltrarModelo
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.Location = new System.Drawing.Point(71, 156);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(92, 28);
-            this.radioButton2.TabIndex = 0;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Modelo";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButtonCamionFiltrarModelo.AutoSize = true;
+            this.radioButtonCamionFiltrarModelo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonCamionFiltrarModelo.Location = new System.Drawing.Point(33, 74);
+            this.radioButtonCamionFiltrarModelo.Name = "radioButtonCamionFiltrarModelo";
+            this.radioButtonCamionFiltrarModelo.Size = new System.Drawing.Size(92, 28);
+            this.radioButtonCamionFiltrarModelo.TabIndex = 0;
+            this.radioButtonCamionFiltrarModelo.Text = "Modelo";
+            this.radioButtonCamionFiltrarModelo.UseVisualStyleBackColor = true;
             // 
-            // radioButton3
+            // radioButtonCamionFiltrarMatricula
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton3.Location = new System.Drawing.Point(71, 209);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(103, 28);
-            this.radioButton3.TabIndex = 0;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Matricula";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButtonCamionFiltrarMatricula.AutoSize = true;
+            this.radioButtonCamionFiltrarMatricula.Checked = true;
+            this.radioButtonCamionFiltrarMatricula.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonCamionFiltrarMatricula.Location = new System.Drawing.Point(33, 127);
+            this.radioButtonCamionFiltrarMatricula.Name = "radioButtonCamionFiltrarMatricula";
+            this.radioButtonCamionFiltrarMatricula.Size = new System.Drawing.Size(103, 28);
+            this.radioButtonCamionFiltrarMatricula.TabIndex = 0;
+            this.radioButtonCamionFiltrarMatricula.TabStop = true;
+            this.radioButtonCamionFiltrarMatricula.Text = "Matricula";
+            this.radioButtonCamionFiltrarMatricula.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // textBoxCamionFiltrar
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(71, 46);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(133, 29);
-            this.textBox1.TabIndex = 1;
+            this.textBoxCamionFiltrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxCamionFiltrar.Location = new System.Drawing.Point(55, 46);
+            this.textBoxCamionFiltrar.Name = "textBoxCamionFiltrar";
+            this.textBoxCamionFiltrar.Size = new System.Drawing.Size(149, 29);
+            this.textBoxCamionFiltrar.TabIndex = 1;
             // 
-            // checkBox1
+            // checkBoxCamionFiltrar
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(404, 12);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(245, 28);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "Mostrar camiones de baja";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBoxCamionFiltrar.AutoSize = true;
+            this.checkBoxCamionFiltrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxCamionFiltrar.Location = new System.Drawing.Point(404, 12);
+            this.checkBoxCamionFiltrar.Name = "checkBoxCamionFiltrar";
+            this.checkBoxCamionFiltrar.Size = new System.Drawing.Size(245, 28);
+            this.checkBoxCamionFiltrar.TabIndex = 2;
+            this.checkBoxCamionFiltrar.Text = "Mostrar camiones de baja";
+            this.checkBoxCamionFiltrar.UseVisualStyleBackColor = true;
+            this.checkBoxCamionFiltrar.CheckedChanged += new System.EventHandler(this.checkBoxCamionFiltrar_CheckedChanged);
             // 
-            // dataGridView1
+            // dataGridViewCamionFiltrar
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(244, 46);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(598, 191);
-            this.dataGridView1.TabIndex = 3;
+            this.dataGridViewCamionFiltrar.AllowUserToAddRows = false;
+            this.dataGridViewCamionFiltrar.AllowUserToDeleteRows = false;
+            this.dataGridViewCamionFiltrar.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewCamionFiltrar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewCamionFiltrar.Location = new System.Drawing.Point(244, 46);
+            this.dataGridViewCamionFiltrar.Name = "dataGridViewCamionFiltrar";
+            this.dataGridViewCamionFiltrar.ReadOnly = true;
+            this.dataGridViewCamionFiltrar.Size = new System.Drawing.Size(598, 191);
+            this.dataGridViewCamionFiltrar.TabIndex = 3;
+            this.dataGridViewCamionFiltrar.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCamionFiltrar_CellContentClick);
             // 
-            // button1
+            // buttonCamionFiltrarSubmit
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(71, 260);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(133, 36);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonCamionFiltrarSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonCamionFiltrarSubmit.Location = new System.Drawing.Point(55, 260);
+            this.buttonCamionFiltrarSubmit.Name = "buttonCamionFiltrarSubmit";
+            this.buttonCamionFiltrarSubmit.Size = new System.Drawing.Size(149, 36);
+            this.buttonCamionFiltrarSubmit.TabIndex = 4;
+            this.buttonCamionFiltrarSubmit.Text = "Filtrar";
+            this.buttonCamionFiltrarSubmit.UseVisualStyleBackColor = true;
+            this.buttonCamionFiltrarSubmit.Click += new System.EventHandler(this.buttonCamionFiltrarSubmit_Click);
             // 
-            // button2
+            // buttonAltaBaja
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(244, 260);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(598, 36);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "button1";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonAltaBaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAltaBaja.Location = new System.Drawing.Point(244, 260);
+            this.buttonAltaBaja.Name = "buttonAltaBaja";
+            this.buttonAltaBaja.Size = new System.Drawing.Size(598, 36);
+            this.buttonAltaBaja.TabIndex = 4;
+            this.buttonAltaBaja.Text = "Alta/Baja";
+            this.buttonAltaBaja.UseVisualStyleBackColor = true;
+            this.buttonAltaBaja.Click += new System.EventHandler(this.buttonAltaBaja_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.radioButtonCamionFiltrarMarca);
+            this.groupBox1.Controls.Add(this.radioButtonCamionFiltrarModelo);
+            this.groupBox1.Controls.Add(this.radioButtonCamionFiltrarMatricula);
+            this.groupBox1.Location = new System.Drawing.Point(55, 81);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(149, 168);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
             // 
             // FiltrarCamion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(862, 317);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.radioButton3);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.buttonAltaBaja);
+            this.Controls.Add(this.buttonCamionFiltrarSubmit);
+            this.Controls.Add(this.dataGridViewCamionFiltrar);
+            this.Controls.Add(this.checkBoxCamionFiltrar);
+            this.Controls.Add(this.textBoxCamionFiltrar);
             this.Name = "FiltrarCamion";
             this.Text = "FiltrarCamion";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCamionFiltrar)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -145,13 +165,15 @@
 
         #endregion
 
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.RadioButton radioButtonCamionFiltrarMarca;
+        private System.Windows.Forms.RadioButton radioButtonCamionFiltrarModelo;
+        private System.Windows.Forms.RadioButton radioButtonCamionFiltrarMatricula;
+        private System.Windows.Forms.TextBox textBoxCamionFiltrar;
+        private System.Windows.Forms.CheckBox checkBoxCamionFiltrar;
+        private System.Windows.Forms.DataGridView dataGridViewCamionFiltrar;
+        private System.Windows.Forms.Button buttonCamionFiltrarSubmit;
+        private System.Windows.Forms.Button buttonAltaBaja;
+        private System.Windows.Forms.GroupBox groupBox1;
+        
     }
 }

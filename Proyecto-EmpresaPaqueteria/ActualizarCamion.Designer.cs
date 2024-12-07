@@ -55,6 +55,7 @@
             this.buttonCamionUpdateSubmit.TabIndex = 3;
             this.buttonCamionUpdateSubmit.Text = "Actualizar";
             this.buttonCamionUpdateSubmit.UseVisualStyleBackColor = true;
+            this.buttonCamionUpdateSubmit.Click += new System.EventHandler(this.buttonCamionUpdateSubmit_Click);
             // 
             // labelCamionUpdateMarca
             // 

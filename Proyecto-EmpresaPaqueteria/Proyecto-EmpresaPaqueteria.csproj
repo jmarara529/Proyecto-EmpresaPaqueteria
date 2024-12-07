@@ -52,11 +52,23 @@
     <Compile Include="ActualizarCamion.Designer.cs">
       <DependentUpon>ActualizarCamion.cs</DependentUpon>
     </Compile>
+    <Compile Include="ActualizarChofer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ActualizarChofer.Designer.cs">
+      <DependentUpon>ActualizarChofer.cs</DependentUpon>
+    </Compile>
     <Compile Include="FiltrarCamion.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FiltrarCamion.Designer.cs">
       <DependentUpon>FiltrarCamion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FiltrarChofer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FiltrarChofer.Designer.cs">
+      <DependentUpon>FiltrarChofer.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -69,8 +81,14 @@
     <EmbeddedResource Include="ActualizarCamion.resx">
       <DependentUpon>ActualizarCamion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ActualizarChofer.resx">
+      <DependentUpon>ActualizarChofer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FiltrarCamion.resx">
       <DependentUpon>FiltrarCamion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FiltrarChofer.resx">
+      <DependentUpon>FiltrarChofer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
