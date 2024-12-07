@@ -572,6 +572,7 @@
             this.buttonPaqueteFiltrar.TabIndex = 5;
             this.buttonPaqueteFiltrar.Text = "Filtrar";
             this.buttonPaqueteFiltrar.UseVisualStyleBackColor = true;
+            this.buttonPaqueteFiltrar.Click += new System.EventHandler(this.buttonPaqueteFiltrar_Click);
             // 
             // buttonPaqueteApañadir
             // 

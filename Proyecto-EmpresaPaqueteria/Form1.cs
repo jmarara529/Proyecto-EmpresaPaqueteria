@@ -672,7 +672,7 @@ namespace Proyecto_EmpresaPaqueteria
 
         private void buttonPaqueteApañadir_Click(object sender, EventArgs e)
         {
-            string producto = textBoxPaqueteProducto.Text.Trim();
+            string producto = textBoxPaqueteProducto.Text.Trim().ToUpper();
             string nombreProvincia = comboBoxPaqueteProvincia.Text.Trim();
 
             if (string.IsNullOrEmpty(producto) || string.IsNullOrEmpty(nombreProvincia))
@@ -744,22 +744,35 @@ namespace Proyecto_EmpresaPaqueteria
         {
             List<(int paqueteId, string provincia)> paquetes = new List<(int, string)>();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            if (dataGridViewPaquete.SelectedRows.Count > 0)
             {
-                connection.Open();
-
-                // Obtener todos los paquetes sin asignar
-                string getPaquetesQuery = "SELECT id, provincia FROM paquete WHERE idLote IS NULL";
-                using (SqlCommand getPaquetesCommand = new SqlCommand(getPaquetesQuery, connection))
+                // Obtener el paquete seleccionado
+                foreach (DataGridViewRow row in dataGridViewPaquete.SelectedRows)
                 {
-                    SqlDataReader reader = getPaquetesCommand.ExecuteReader();
-                    while (reader.Read())
+                    int paqueteId = (int)row.Cells["id"].Value;
+                    string provincia = row.Cells["provincia"].Value.ToString();
+                    paquetes.Add((paqueteId, provincia));
+                }
+            }
+            else
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Obtener todos los paquetes sin asignar
+                    string getPaquetesQuery = "SELECT id, provincia FROM paquete WHERE idLote IS NULL";
+                    using (SqlCommand getPaquetesCommand = new SqlCommand(getPaquetesQuery, connection))
                     {
-                        int paqueteId = (int)reader["id"];
-                        string provincia = reader["provincia"].ToString();
-                        paquetes.Add((paqueteId, provincia));
+                        SqlDataReader reader = getPaquetesCommand.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            int paqueteId = (int)reader["id"];
+                            string provincia = reader["provincia"].ToString();
+                            paquetes.Add((paqueteId, provincia));
+                        }
+                        reader.Close(); // Cerrar el DataReader
                     }
-                    reader.Close(); // Cerrar el DataReader
                 }
             }
 
@@ -845,6 +858,17 @@ namespace Proyecto_EmpresaPaqueteria
         }
 
 
+        private void buttonPaqueteFiltrar_Click(object sender, EventArgs e)
+        {
+            FiltrarPaquetes filtrarPaquetes = new FiltrarPaquetes();
+            filtrarPaquetes.FormClosed += new FormClosedEventHandler(FiltrarPaquetes_FormClosed);
+            filtrarPaquetes.ShowDialog();
+        }
+
+        private void FiltrarPaquetes_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            CargarDatosPaquete();
+        }
     }
 
 }

@@ -76,6 +76,12 @@
     <Compile Include="FiltrarChofer.Designer.cs">
       <DependentUpon>FiltrarChofer.cs</DependentUpon>
     </Compile>
+    <Compile Include="FiltrarPaquetes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FiltrarPaquetes.Designer.cs">
+      <DependentUpon>FiltrarPaquetes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FiltrarChofer.resx">
       <DependentUpon>FiltrarChofer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FiltrarPaquetes.resx">
+      <DependentUpon>FiltrarPaquetes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
