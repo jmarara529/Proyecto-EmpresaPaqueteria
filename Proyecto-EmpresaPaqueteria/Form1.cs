@@ -746,7 +746,7 @@ namespace Proyecto_EmpresaPaqueteria
 
             if (dataGridViewPaquete.SelectedRows.Count > 0)
             {
-                // Obtener el paquete seleccionado
+                // Obtener los paquetes seleccionados
                 foreach (DataGridViewRow row in dataGridViewPaquete.SelectedRows)
                 {
                     int paqueteId = (int)row.Cells["id"].Value;
@@ -817,37 +817,81 @@ namespace Proyecto_EmpresaPaqueteria
                         }
                     }
 
-                    // Asignar el paquete al lote
-                    string updatePaqueteQuery = "UPDATE paquete SET idLote = @loteId WHERE id = @paqueteId";
-                    using (SqlCommand updatePaqueteCommand = new SqlCommand(updatePaqueteQuery, connection))
+                    // Verificar la capacidad y estado del lote antes de asignar el paquete
+                    string checkLoteCapacityQuery = "SELECT capacidadMaxima, enviado FROM lote WHERE id = @loteId";
+                    using (SqlCommand checkLoteCapacityCommand = new SqlCommand(checkLoteCapacityQuery, connection))
                     {
-                        updatePaqueteCommand.Parameters.AddWithValue("@loteId", loteId);
-                        updatePaqueteCommand.Parameters.AddWithValue("@paqueteId", paqueteId);
-                        updatePaqueteCommand.ExecuteNonQuery();
-                    }
-
-                    // Incrementar la capacidad del lote
-                    string updateLoteQuery = "UPDATE lote SET capacidadMaxima = capacidadMaxima + 1 WHERE id = @loteId";
-                    using (SqlCommand updateLoteCommand = new SqlCommand(updateLoteQuery, connection))
-                    {
-                        updateLoteCommand.Parameters.AddWithValue("@loteId", loteId);
-                        updateLoteCommand.ExecuteNonQuery();
-                    }
-
-                    // Verificar si el lote ha alcanzado su capacidad máxima
-                    string checkLoteQuery = "SELECT capacidadMaxima FROM lote WHERE id = @loteId";
-                    using (SqlCommand checkLoteCommand = new SqlCommand(checkLoteQuery, connection))
-                    {
-                        checkLoteCommand.Parameters.AddWithValue("@loteId", loteId);
-                        int capacidadMaxima = (int)checkLoteCommand.ExecuteScalar();
-                        if (capacidadMaxima >= 20)
+                        checkLoteCapacityCommand.Parameters.AddWithValue("@loteId", loteId);
+                        using (SqlDataReader loteReader = checkLoteCapacityCommand.ExecuteReader())
                         {
-                            string markLoteEnviadoQuery = "UPDATE lote SET enviado = 1 WHERE id = @loteId";
-                            using (SqlCommand markLoteEnviadoCommand = new SqlCommand(markLoteEnviadoQuery, connection))
+                            if (loteReader.Read())
                             {
-                                markLoteEnviadoCommand.Parameters.AddWithValue("@loteId", loteId);
-                                markLoteEnviadoCommand.ExecuteNonQuery();
+                                int capacidadMaxima = (int)loteReader["capacidadMaxima"];
+                                bool enviado = (bool)loteReader["enviado"];
+
+                                if (capacidadMaxima < 20 && !enviado)
+                                {
+                                    loteReader.Close(); // Cerrar el DataReader antes de ejecutar otros comandos
+
+                                    // Asignar el paquete al lote
+                                    string updatePaqueteQuery = "UPDATE paquete SET idLote = @loteId WHERE id = @paqueteId";
+                                    using (SqlCommand updatePaqueteCommand = new SqlCommand(updatePaqueteQuery, connection))
+                                    {
+                                        updatePaqueteCommand.Parameters.AddWithValue("@loteId", loteId);
+                                        updatePaqueteCommand.Parameters.AddWithValue("@paqueteId", paqueteId);
+                                        updatePaqueteCommand.ExecuteNonQuery();
+                                    }
+
+                                    // Incrementar la capacidad del lote
+                                    string updateLoteQuery = "UPDATE lote SET capacidadMaxima = capacidadMaxima + 1 WHERE id = @loteId";
+                                    using (SqlCommand updateLoteCommand = new SqlCommand(updateLoteQuery, connection))
+                                    {
+                                        updateLoteCommand.Parameters.AddWithValue("@loteId", loteId);
+                                        updateLoteCommand.ExecuteNonQuery();
+                                    }
+                                }
+                                else
+                                {
+                                    loteReader.Close(); // Cerrar el DataReader antes de ejecutar otros comandos
+
+                                    // Crear un nuevo lote si el actual ha alcanzado su capacidad máxima o está marcado como enviado
+                                    int nuevoLoteId = 1;
+                                    string maxLoteIdQuery = "SELECT ISNULL(MAX(id), 0) FROM lote";
+                                    using (SqlCommand maxLoteIdCommand = new SqlCommand(maxLoteIdQuery, connection))
+                                    {
+                                        int maxLoteId = (int)maxLoteIdCommand.ExecuteScalar();
+                                        nuevoLoteId = maxLoteId + 1;
+                                    }
+
+                                    string insertLoteQuery = "INSERT INTO lote (id, provinciaDestino, enviado, capacidadMaxima) VALUES (@id, @provincia, 0, 0)";
+                                    using (SqlCommand insertLoteCommand = new SqlCommand(insertLoteQuery, connection))
+                                    {
+                                        insertLoteCommand.Parameters.AddWithValue("@id", nuevoLoteId);
+                                        insertLoteCommand.Parameters.AddWithValue("@provincia", provincia);
+                                        insertLoteCommand.ExecuteNonQuery();
+
+                                        loteId = nuevoLoteId;
+                                    }
+
+                                    // Asignar el paquete al nuevo lote
+                                    string updatePaqueteQuery = "UPDATE paquete SET idLote = @loteId WHERE id = @paqueteId";
+                                    using (SqlCommand updatePaqueteCommand = new SqlCommand(updatePaqueteQuery, connection))
+                                    {
+                                        updatePaqueteCommand.Parameters.AddWithValue("@loteId", loteId);
+                                        updatePaqueteCommand.Parameters.AddWithValue("@paqueteId", paqueteId);
+                                        updatePaqueteCommand.ExecuteNonQuery();
+                                    }
+
+                                    // Incrementar la capacidad del nuevo lote
+                                    string updateLoteQuery = "UPDATE lote SET capacidadMaxima = capacidadMaxima + 1 WHERE id = @loteId";
+                                    using (SqlCommand updateLoteCommand = new SqlCommand(updateLoteQuery, connection))
+                                    {
+                                        updateLoteCommand.Parameters.AddWithValue("@loteId", loteId);
+                                        updateLoteCommand.ExecuteNonQuery();
+                                    }
+                                }
                             }
+                            loteReader.Close(); // Asegurarse de cerrar el DataReader al final
                         }
                     }
                 }
@@ -856,7 +900,6 @@ namespace Proyecto_EmpresaPaqueteria
             // Actualizar los datos en el DataGridView
             CargarDatosPaquete();
         }
-
 
         private void buttonPaqueteFiltrar_Click(object sender, EventArgs e)
         {

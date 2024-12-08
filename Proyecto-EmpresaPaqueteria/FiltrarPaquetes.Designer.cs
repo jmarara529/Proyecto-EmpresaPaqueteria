@@ -30,8 +30,8 @@
         {
             this.comboBoxFiltro = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButtonProducto = new System.Windows.Forms.RadioButton();
             this.radioButtonProvincia = new System.Windows.Forms.RadioButton();
+            this.radioButtonProducto = new System.Windows.Forms.RadioButton();
             this.buttonSubmit = new System.Windows.Forms.Button();
             this.checkBoxMostrarAsignados = new System.Windows.Forms.CheckBox();
             this.dataGridViewFiltrarProducto = new System.Windows.Forms.DataGridView();
@@ -42,6 +42,8 @@
             // 
             // comboBoxFiltro
             // 
+            this.comboBoxFiltro.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxFiltro.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxFiltro.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxFiltro.FormattingEnabled = true;
             this.comboBoxFiltro.Location = new System.Drawing.Point(22, 46);
@@ -59,18 +61,6 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             // 
-            // radioButtonProducto
-            // 
-            this.radioButtonProducto.AutoSize = true;
-            this.radioButtonProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButtonProducto.Location = new System.Drawing.Point(23, 54);
-            this.radioButtonProducto.Name = "radioButtonProducto";
-            this.radioButtonProducto.Size = new System.Drawing.Size(104, 28);
-            this.radioButtonProducto.TabIndex = 0;
-            this.radioButtonProducto.TabStop = true;
-            this.radioButtonProducto.Text = "Producto";
-            this.radioButtonProducto.UseVisualStyleBackColor = true;
-            // 
             // radioButtonProvincia
             // 
             this.radioButtonProvincia.AutoSize = true;
@@ -82,6 +72,20 @@
             this.radioButtonProvincia.TabStop = true;
             this.radioButtonProvincia.Text = "Provincia";
             this.radioButtonProvincia.UseVisualStyleBackColor = true;
+            this.radioButtonProvincia.CheckedChanged += new System.EventHandler(this.radioButtonProvincia_CheckedChanged);
+            // 
+            // radioButtonProducto
+            // 
+            this.radioButtonProducto.AutoSize = true;
+            this.radioButtonProducto.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonProducto.Location = new System.Drawing.Point(23, 54);
+            this.radioButtonProducto.Name = "radioButtonProducto";
+            this.radioButtonProducto.Size = new System.Drawing.Size(104, 28);
+            this.radioButtonProducto.TabIndex = 0;
+            this.radioButtonProducto.TabStop = true;
+            this.radioButtonProducto.Text = "Producto";
+            this.radioButtonProducto.UseVisualStyleBackColor = true;
+            this.radioButtonProducto.CheckedChanged += new System.EventHandler(this.radioButtonProducto_CheckedChanged);
             // 
             // buttonSubmit
             // 
@@ -92,6 +96,7 @@
             this.buttonSubmit.TabIndex = 2;
             this.buttonSubmit.Text = "Filtrar";
             this.buttonSubmit.UseVisualStyleBackColor = true;
+            this.buttonSubmit.Click += new System.EventHandler(this.buttonSubmit_Click);
             // 
             // checkBoxMostrarAsignados
             // 
@@ -103,12 +108,18 @@
             this.checkBoxMostrarAsignados.TabIndex = 3;
             this.checkBoxMostrarAsignados.Text = "Mostrar asignados";
             this.checkBoxMostrarAsignados.UseVisualStyleBackColor = true;
+            this.checkBoxMostrarAsignados.CheckedChanged += new System.EventHandler(this.checkBoxMostrarAsignados_CheckedChanged);
             // 
             // dataGridViewFiltrarProducto
             // 
+            this.dataGridViewFiltrarProducto.AllowUserToAddRows = false;
+            this.dataGridViewFiltrarProducto.AllowUserToDeleteRows = false;
+            this.dataGridViewFiltrarProducto.AllowUserToOrderColumns = true;
+            this.dataGridViewFiltrarProducto.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewFiltrarProducto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewFiltrarProducto.Location = new System.Drawing.Point(228, 46);
             this.dataGridViewFiltrarProducto.Name = "dataGridViewFiltrarProducto";
+            this.dataGridViewFiltrarProducto.ReadOnly = true;
             this.dataGridViewFiltrarProducto.Size = new System.Drawing.Size(560, 347);
             this.dataGridViewFiltrarProducto.TabIndex = 4;
             // 
