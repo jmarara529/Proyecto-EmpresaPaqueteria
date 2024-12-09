@@ -79,6 +79,18 @@
     <Compile Include="FiltrarChofer.Designer.cs">
       <DependentUpon>FiltrarChofer.cs</DependentUpon>
     </Compile>
+    <Compile Include="FiltrarEnvio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FiltrarEnvio.Designer.cs">
+      <DependentUpon>FiltrarEnvio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FiltrarLote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FiltrarLote.Designer.cs">
+      <DependentUpon>FiltrarLote.cs</DependentUpon>
+    </Compile>
     <Compile Include="FiltrarPaquetes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +119,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FiltrarChofer.resx">
       <DependentUpon>FiltrarChofer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FiltrarEnvio.resx">
+      <DependentUpon>FiltrarEnvio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FiltrarLote.resx">
+      <DependentUpon>FiltrarLote.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FiltrarPaquetes.resx">
       <DependentUpon>FiltrarPaquetes.cs</DependentUpon>

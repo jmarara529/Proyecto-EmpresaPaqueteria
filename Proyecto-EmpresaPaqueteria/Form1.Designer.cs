@@ -83,6 +83,17 @@
             this.labelJsonTitulo = new System.Windows.Forms.Label();
             this.labelJsonAsignatura = new System.Windows.Forms.Label();
             this.labelJsonFecha = new System.Windows.Forms.Label();
+            this.buttonLoteEnviar = new System.Windows.Forms.Button();
+            this.buttonLoteFiltrar = new System.Windows.Forms.Button();
+            this.buttonLoteSubmit = new System.Windows.Forms.Button();
+            this.dataGridViewLote = new System.Windows.Forms.DataGridView();
+            this.checkBoxLoteEnviados = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.comboBoxLoteProvincias = new System.Windows.Forms.ComboBox();
+            this.numericUpDownLote = new System.Windows.Forms.NumericUpDown();
+            this.dataGridViewEnvio = new System.Windows.Forms.DataGridView();
+            this.buttonEnvioFiltrar = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPageCamion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCamion)).BeginInit();
@@ -92,7 +103,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAsignarCamion)).BeginInit();
             this.tabPagePaquete.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPaquete)).BeginInit();
+            this.tabPageLote.SuspendLayout();
+            this.tabPageEnvio.SuspendLayout();
             this.tabPageACercaDe.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLote)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLote)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnvio)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -662,6 +678,15 @@
             // tabPageLote
             // 
             this.tabPageLote.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPageLote.Controls.Add(this.numericUpDownLote);
+            this.tabPageLote.Controls.Add(this.buttonLoteEnviar);
+            this.tabPageLote.Controls.Add(this.buttonLoteFiltrar);
+            this.tabPageLote.Controls.Add(this.buttonLoteSubmit);
+            this.tabPageLote.Controls.Add(this.dataGridViewLote);
+            this.tabPageLote.Controls.Add(this.checkBoxLoteEnviados);
+            this.tabPageLote.Controls.Add(this.label10);
+            this.tabPageLote.Controls.Add(this.label11);
+            this.tabPageLote.Controls.Add(this.comboBoxLoteProvincias);
             this.tabPageLote.Location = new System.Drawing.Point(4, 25);
             this.tabPageLote.Name = "tabPageLote";
             this.tabPageLote.Padding = new System.Windows.Forms.Padding(3);
@@ -673,6 +698,8 @@
             // tabPageEnvio
             // 
             this.tabPageEnvio.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPageEnvio.Controls.Add(this.buttonEnvioFiltrar);
+            this.tabPageEnvio.Controls.Add(this.dataGridViewEnvio);
             this.tabPageEnvio.Location = new System.Drawing.Point(4, 25);
             this.tabPageEnvio.Name = "tabPageEnvio";
             this.tabPageEnvio.Padding = new System.Windows.Forms.Padding(3);
@@ -723,6 +750,141 @@
             this.labelJsonFecha.TabIndex = 1;
             this.labelJsonFecha.Text = "labelJsonFecha";
             // 
+            // buttonLoteEnviar
+            // 
+            this.buttonLoteEnviar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonLoteEnviar.Location = new System.Drawing.Point(745, 345);
+            this.buttonLoteEnviar.Name = "buttonLoteEnviar";
+            this.buttonLoteEnviar.Size = new System.Drawing.Size(322, 44);
+            this.buttonLoteEnviar.TabIndex = 12;
+            this.buttonLoteEnviar.Text = "Enviar";
+            this.buttonLoteEnviar.UseVisualStyleBackColor = true;
+            this.buttonLoteEnviar.Click += new System.EventHandler(this.buttonLoteEnviar_Click);
+            // 
+            // buttonLoteFiltrar
+            // 
+            this.buttonLoteFiltrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonLoteFiltrar.Location = new System.Drawing.Point(331, 345);
+            this.buttonLoteFiltrar.Name = "buttonLoteFiltrar";
+            this.buttonLoteFiltrar.Size = new System.Drawing.Size(322, 44);
+            this.buttonLoteFiltrar.TabIndex = 13;
+            this.buttonLoteFiltrar.Text = "Filtrar";
+            this.buttonLoteFiltrar.UseVisualStyleBackColor = true;
+            this.buttonLoteFiltrar.Click += new System.EventHandler(this.buttonLoteFiltrar_Click);
+            // 
+            // buttonLoteSubmit
+            // 
+            this.buttonLoteSubmit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonLoteSubmit.Location = new System.Drawing.Point(4, 345);
+            this.buttonLoteSubmit.Name = "buttonLoteSubmit";
+            this.buttonLoteSubmit.Size = new System.Drawing.Size(256, 44);
+            this.buttonLoteSubmit.TabIndex = 14;
+            this.buttonLoteSubmit.Text = "añadir";
+            this.buttonLoteSubmit.UseVisualStyleBackColor = true;
+            this.buttonLoteSubmit.Click += new System.EventHandler(this.buttonLoteSubmit_Click);
+            // 
+            // dataGridViewLote
+            // 
+            this.dataGridViewLote.AllowUserToAddRows = false;
+            this.dataGridViewLote.AllowUserToDeleteRows = false;
+            this.dataGridViewLote.AllowUserToOrderColumns = true;
+            this.dataGridViewLote.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewLote.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewLote.Location = new System.Drawing.Point(266, 38);
+            this.dataGridViewLote.Name = "dataGridViewLote";
+            this.dataGridViewLote.ReadOnly = true;
+            this.dataGridViewLote.Size = new System.Drawing.Size(839, 301);
+            this.dataGridViewLote.TabIndex = 11;
+            // 
+            // checkBoxLoteEnviados
+            // 
+            this.checkBoxLoteEnviados.AutoSize = true;
+            this.checkBoxLoteEnviados.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxLoteEnviados.Location = new System.Drawing.Point(600, 4);
+            this.checkBoxLoteEnviados.Name = "checkBoxLoteEnviados";
+            this.checkBoxLoteEnviados.Size = new System.Drawing.Size(172, 28);
+            this.checkBoxLoteEnviados.TabIndex = 10;
+            this.checkBoxLoteEnviados.Text = "Mostrar enviados";
+            this.checkBoxLoteEnviados.UseVisualStyleBackColor = true;
+            this.checkBoxLoteEnviados.CheckedChanged += new System.EventHandler(this.checkBoxLoteEnviados_CheckedChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(3, 93);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(91, 24);
+            this.label10.TabIndex = 8;
+            this.label10.Text = "provincia:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(4, 211);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(176, 24);
+            this.label11.TabIndex = 9;
+            this.label11.Text = "Capacidad Maxima:";
+            // 
+            // comboBoxLoteProvincias
+            // 
+            this.comboBoxLoteProvincias.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxLoteProvincias.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.comboBoxLoteProvincias.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxLoteProvincias.FormattingEnabled = true;
+            this.comboBoxLoteProvincias.Location = new System.Drawing.Point(100, 90);
+            this.comboBoxLoteProvincias.Name = "comboBoxLoteProvincias";
+            this.comboBoxLoteProvincias.Size = new System.Drawing.Size(160, 32);
+            this.comboBoxLoteProvincias.TabIndex = 7;
+            // 
+            // numericUpDownLote
+            // 
+            this.numericUpDownLote.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownLote.Location = new System.Drawing.Point(186, 206);
+            this.numericUpDownLote.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.numericUpDownLote.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownLote.Name = "numericUpDownLote";
+            this.numericUpDownLote.Size = new System.Drawing.Size(74, 29);
+            this.numericUpDownLote.TabIndex = 15;
+            this.numericUpDownLote.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            // 
+            // dataGridViewEnvio
+            // 
+            this.dataGridViewEnvio.AllowUserToAddRows = false;
+            this.dataGridViewEnvio.AllowUserToDeleteRows = false;
+            this.dataGridViewEnvio.AllowUserToOrderColumns = true;
+            this.dataGridViewEnvio.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewEnvio.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewEnvio.Location = new System.Drawing.Point(6, 6);
+            this.dataGridViewEnvio.Name = "dataGridViewEnvio";
+            this.dataGridViewEnvio.ReadOnly = true;
+            this.dataGridViewEnvio.Size = new System.Drawing.Size(1097, 332);
+            this.dataGridViewEnvio.TabIndex = 0;
+            // 
+            // buttonEnvioFiltrar
+            // 
+            this.buttonEnvioFiltrar.Location = new System.Drawing.Point(6, 344);
+            this.buttonEnvioFiltrar.Name = "buttonEnvioFiltrar";
+            this.buttonEnvioFiltrar.Size = new System.Drawing.Size(1097, 43);
+            this.buttonEnvioFiltrar.TabIndex = 1;
+            this.buttonEnvioFiltrar.Text = "Filtrar";
+            this.buttonEnvioFiltrar.UseVisualStyleBackColor = true;
+            this.buttonEnvioFiltrar.Click += new System.EventHandler(this.buttonEnvioFiltrar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -745,8 +907,14 @@
             this.tabPagePaquete.ResumeLayout(false);
             this.tabPagePaquete.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPaquete)).EndInit();
+            this.tabPageLote.ResumeLayout(false);
+            this.tabPageLote.PerformLayout();
+            this.tabPageEnvio.ResumeLayout(false);
             this.tabPageACercaDe.ResumeLayout(false);
             this.tabPageACercaDe.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLote)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLote)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnvio)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -808,6 +976,17 @@
         private System.Windows.Forms.Label labelJsonTitulo;
         private System.Windows.Forms.Label labelJsonFecha;
         private System.Windows.Forms.Label labelJsonAsignatura;
+        private System.Windows.Forms.NumericUpDown numericUpDownLote;
+        private System.Windows.Forms.Button buttonLoteEnviar;
+        private System.Windows.Forms.Button buttonLoteFiltrar;
+        private System.Windows.Forms.Button buttonLoteSubmit;
+        private System.Windows.Forms.DataGridView dataGridViewLote;
+        private System.Windows.Forms.CheckBox checkBoxLoteEnviados;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox comboBoxLoteProvincias;
+        private System.Windows.Forms.Button buttonEnvioFiltrar;
+        private System.Windows.Forms.DataGridView dataGridViewEnvio;
     }
 }
 

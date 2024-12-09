@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System;
 using System.IO;
-using System.Windows.Forms;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 
@@ -37,6 +30,8 @@ namespace Proyecto_EmpresaPaqueteria
             CargarDatosChofer();
             CargarDatosAsignarCamion();
             CargarDatosPaquete();
+            CargarDatoslote();
+            CargarDatosEnvio();
             CargarComboboxCamion();
             CargarComboboxChofer();
             CargarComboboxProvincia();
@@ -661,6 +656,7 @@ namespace Proyecto_EmpresaPaqueteria
             }
         }
 
+        //asigna tambien al comboboxProvincia de pestaña lotes
         private void CargarComboboxProvincia()
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -674,6 +670,8 @@ namespace Proyecto_EmpresaPaqueteria
                     while (reader.Read())
                     {
                         comboBoxPaqueteProvincia.Items.Add(reader["nombre"].ToString());
+                        comboBoxLoteProvincias.Items.Add(reader["nombre"].ToString());
+
                     }
                     reader.Close();
                 }
@@ -790,127 +788,198 @@ namespace Proyecto_EmpresaPaqueteria
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
 
-                foreach (var (paqueteId, provincia) in paquetes)
+                try
                 {
-                    // Verificar si existe un lote no enviado y con capacidad disponible para la provincia
-                    int loteId = -1;
-                    string getLoteQuery = "SELECT TOP 1 id FROM lote WHERE provinciaDestino = @provincia AND enviado = 0 AND capacidadMaxima < 20";
-                    using (SqlCommand getLoteCommand = new SqlCommand(getLoteQuery, connection))
+                    foreach (var (paqueteId, provincia) in paquetes)
                     {
-                        getLoteCommand.Parameters.AddWithValue("@provincia", provincia);
-                        object result = getLoteCommand.ExecuteScalar();
-                        if (result != null)
-                        {
-                            loteId = (int)result;
-                        }
-                    }
+                        // Verificar si existe un lote no enviado y con capacidad disponible para la provincia
+                        int loteId = ObtenerLoteDisponible(connection, transaction, provincia);
 
-                    // Si no existe un lote, crear uno nuevo
-                    if (loteId == -1)
-                    {
-                        // Obtener el valor máximo de 'id' en la tabla 'lote'
-                        int nuevoLoteId = 1;
-                        string maxLoteIdQuery = "SELECT ISNULL(MAX(id), 0) FROM lote";
-                        using (SqlCommand maxLoteIdCommand = new SqlCommand(maxLoteIdQuery, connection))
+                        // Si no existe un lote, crear uno nuevo
+                        if (loteId == -1)
                         {
-                            int maxLoteId = (int)maxLoteIdCommand.ExecuteScalar();
-                            nuevoLoteId = maxLoteId + 1;
+                            loteId = CrearNuevoLote(connection, transaction, provincia);
                         }
 
-                        string insertLoteQuery = "INSERT INTO lote (id, provinciaDestino, enviado, capacidadMaxima) VALUES (@id, @provincia, 0, 0)";
-                        using (SqlCommand insertLoteCommand = new SqlCommand(insertLoteQuery, connection))
-                        {
-                            insertLoteCommand.Parameters.AddWithValue("@id", nuevoLoteId);
-                            insertLoteCommand.Parameters.AddWithValue("@provincia", provincia);
-                            insertLoteCommand.ExecuteNonQuery();
-                            loteId = nuevoLoteId;
-                        }
-                    }
+                        // Verificar la cantidad de paquetes asignados y la capacidad máxima del lote
+                        string checkLoteCapacityQuery = @"
+                    SELECT
+                        l.capacidadMaxima,
+                        COUNT(p.id) AS paquetesAsignados
+                    FROM lote l
+                    LEFT JOIN paquete p ON l.id = p.idLote
+                    WHERE l.id = @loteId
+                    GROUP BY l.capacidadMaxima";
 
-                    // Verificar la capacidad y estado del lote antes de asignar el paquete
-                    string checkLoteCapacityQuery = "SELECT capacidadMaxima, enviado FROM lote WHERE id = @loteId";
-                    using (SqlCommand checkLoteCapacityCommand = new SqlCommand(checkLoteCapacityQuery, connection))
-                    {
-                        checkLoteCapacityCommand.Parameters.AddWithValue("@loteId", loteId);
-                        using (SqlDataReader loteReader = checkLoteCapacityCommand.ExecuteReader())
+                        using (SqlCommand checkLoteCapacityCommand = new SqlCommand(checkLoteCapacityQuery, connection, transaction))
                         {
-                            if (loteReader.Read())
+                            checkLoteCapacityCommand.Parameters.AddWithValue("@loteId", loteId);
+                            using (SqlDataReader loteReader = checkLoteCapacityCommand.ExecuteReader())
                             {
-                                int capacidadMaxima = (int)loteReader["capacidadMaxima"];
-                                bool enviado = (bool)loteReader["enviado"];
-
-                                if (capacidadMaxima < 20 && !enviado)
+                                if (loteReader.Read())
                                 {
-                                    loteReader.Close(); // Cerrar el DataReader antes de ejecutar otros comandos
+                                    int capacidadMaxima = (int)loteReader["capacidadMaxima"];
+                                    int paquetesAsignados = (int)loteReader["paquetesAsignados"];
 
-                                    // Asignar el paquete al lote
-                                    string updatePaqueteQuery = "UPDATE paquete SET idLote = @loteId WHERE id = @paqueteId";
-                                    using (SqlCommand updatePaqueteCommand = new SqlCommand(updatePaqueteQuery, connection))
+                                    loteReader.Close(); // Cerrar el DataReader antes de proceder
+
+                                    if (paquetesAsignados < capacidadMaxima)
                                     {
-                                        updatePaqueteCommand.Parameters.AddWithValue("@loteId", loteId);
-                                        updatePaqueteCommand.Parameters.AddWithValue("@paqueteId", paqueteId);
-                                        updatePaqueteCommand.ExecuteNonQuery();
+                                        // Asignar el paquete al lote
+                                        string updatePaqueteQuery = "UPDATE paquete SET idLote = @loteId WHERE id = @paqueteId";
+                                        using (SqlCommand updatePaqueteCommand = new SqlCommand(updatePaqueteQuery, connection, transaction))
+                                        {
+                                            updatePaqueteCommand.Parameters.AddWithValue("@loteId", loteId);
+                                            updatePaqueteCommand.Parameters.AddWithValue("@paqueteId", paqueteId);
+                                            updatePaqueteCommand.ExecuteNonQuery();
+                                        }
                                     }
-
-                                    // Incrementar la capacidad del lote
-                                    string updateLoteQuery = "UPDATE lote SET capacidadMaxima = capacidadMaxima + 1 WHERE id = @loteId";
-                                    using (SqlCommand updateLoteCommand = new SqlCommand(updateLoteQuery, connection))
+                                    else
                                     {
-                                        updateLoteCommand.Parameters.AddWithValue("@loteId", loteId);
-                                        updateLoteCommand.ExecuteNonQuery();
+                                        // Crear un nuevo lote si el actual ha alcanzado su capacidad máxima
+                                        loteId = CrearNuevoLote(connection, transaction, provincia);
+
+                                        // Asignar el paquete al nuevo lote
+                                        string updatePaqueteQuery = "UPDATE paquete SET idLote = @loteId WHERE id = @paqueteId";
+                                        using (SqlCommand updatePaqueteCommand = new SqlCommand(updatePaqueteQuery, connection, transaction))
+                                        {
+                                            updatePaqueteCommand.Parameters.AddWithValue("@loteId", loteId);
+                                            updatePaqueteCommand.Parameters.AddWithValue("@paqueteId", paqueteId);
+                                            updatePaqueteCommand.ExecuteNonQuery();
+                                        }
                                     }
                                 }
                                 else
                                 {
-                                    loteReader.Close(); // Cerrar el DataReader antes de ejecutar otros comandos
-
-                                    // Crear un nuevo lote si el actual ha alcanzado su capacidad máxima o está marcado como enviado
-                                    int nuevoLoteId = 1;
-                                    string maxLoteIdQuery = "SELECT ISNULL(MAX(id), 0) FROM lote";
-                                    using (SqlCommand maxLoteIdCommand = new SqlCommand(maxLoteIdQuery, connection))
-                                    {
-                                        int maxLoteId = (int)maxLoteIdCommand.ExecuteScalar();
-                                        nuevoLoteId = maxLoteId + 1;
-                                    }
-
-                                    string insertLoteQuery = "INSERT INTO lote (id, provinciaDestino, enviado, capacidadMaxima) VALUES (@id, @provincia, 0, 0)";
-                                    using (SqlCommand insertLoteCommand = new SqlCommand(insertLoteQuery, connection))
-                                    {
-                                        insertLoteCommand.Parameters.AddWithValue("@id", nuevoLoteId);
-                                        insertLoteCommand.Parameters.AddWithValue("@provincia", provincia);
-                                        insertLoteCommand.ExecuteNonQuery();
-
-                                        loteId = nuevoLoteId;
-                                    }
-
-                                    // Asignar el paquete al nuevo lote
-                                    string updatePaqueteQuery = "UPDATE paquete SET idLote = @loteId WHERE id = @paqueteId";
-                                    using (SqlCommand updatePaqueteCommand = new SqlCommand(updatePaqueteQuery, connection))
-                                    {
-                                        updatePaqueteCommand.Parameters.AddWithValue("@loteId", loteId);
-                                        updatePaqueteCommand.Parameters.AddWithValue("@paqueteId", paqueteId);
-                                        updatePaqueteCommand.ExecuteNonQuery();
-                                    }
-
-                                    // Incrementar la capacidad del nuevo lote
-                                    string updateLoteQuery = "UPDATE lote SET capacidadMaxima = capacidadMaxima + 1 WHERE id = @loteId";
-                                    using (SqlCommand updateLoteCommand = new SqlCommand(updateLoteQuery, connection))
-                                    {
-                                        updateLoteCommand.Parameters.AddWithValue("@loteId", loteId);
-                                        updateLoteCommand.ExecuteNonQuery();
-                                    }
+                                    loteReader.Close(); // Asegurarse de cerrar el DataReader en caso de que no lea nada
                                 }
                             }
-                            loteReader.Close(); // Asegurarse de cerrar el DataReader al final
                         }
                     }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show("Error al asignar paquetes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
             // Actualizar los datos en el DataGridView
             CargarDatosPaquete();
+            CargarDatoslote();
         }
+
+
+
+        private List<(int paqueteId, string provincia)> ObtenerPaquetesSinAsignar()
+        {
+            List<(int paqueteId, string provincia)> paquetes = new List<(int, string)>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string getPaquetesQuery = "SELECT id, provincia FROM paquete WHERE idLote IS NULL";
+                using (SqlCommand getPaquetesCommand = new SqlCommand(getPaquetesQuery, connection))
+                {
+                    SqlDataReader reader = getPaquetesCommand.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        int paqueteId = (int)reader["id"];
+                        string provincia = reader["provincia"].ToString();
+                        paquetes.Add((paqueteId, provincia));
+                    }
+                    reader.Close();
+                }
+            }
+
+            return paquetes;
+        }
+
+        private int ObtenerLoteDisponible(SqlConnection connection, SqlTransaction transaction, string provincia)
+        {
+            int loteId = -1;
+
+            string getLoteQuery = "SELECT TOP 1 id FROM lote WHERE provinciaDestino = @provincia AND enviado = 0";
+            using (SqlCommand getLoteCommand = new SqlCommand(getLoteQuery, connection, transaction))
+            {
+                getLoteCommand.Parameters.AddWithValue("@provincia", provincia);
+                object result = getLoteCommand.ExecuteScalar();
+                if (result != null)
+                {
+                    loteId = (int)result;
+                }
+            }
+
+            return loteId;
+        }
+
+        private int CrearNuevoLote(SqlConnection connection, SqlTransaction transaction, string provincia)
+        {
+            int nuevoLoteId = 1;
+
+            string maxLoteIdQuery = "SELECT ISNULL(MAX(id), 0) FROM lote";
+            using (SqlCommand maxLoteIdCommand = new SqlCommand(maxLoteIdQuery, connection, transaction))
+            {
+                int maxLoteId = (int)maxLoteIdCommand.ExecuteScalar();
+                nuevoLoteId = maxLoteId + 1;
+            }
+
+            string insertLoteQuery = "INSERT INTO lote (id, provinciaDestino, enviado, capacidadMaxima) VALUES (@id, @provincia, 0, 20)";
+            using (SqlCommand insertLoteCommand = new SqlCommand(insertLoteQuery, connection, transaction))
+            {
+                insertLoteCommand.Parameters.AddWithValue("@id", nuevoLoteId);
+                insertLoteCommand.Parameters.AddWithValue("@provincia", provincia);
+                insertLoteCommand.ExecuteNonQuery();
+            }
+
+            return nuevoLoteId;
+        }
+
+        private void AsignarPaqueteALote(SqlConnection connection, SqlTransaction transaction, int paqueteId, int loteId, string provincia)
+        {
+            // Verificar la cantidad de paquetes asignados al lote
+            string checkPaquetesAsignadosQuery = "SELECT COUNT(*) FROM paquete WHERE idLote = @loteId";
+            using (SqlCommand checkPaquetesAsignadosCommand = new SqlCommand(checkPaquetesAsignadosQuery, connection, transaction))
+            {
+                checkPaquetesAsignadosCommand.Parameters.AddWithValue("@loteId", loteId);
+                int paquetesAsignados = (int)checkPaquetesAsignadosCommand.ExecuteScalar();
+
+                if (paquetesAsignados < 20)
+                {
+                    // Asignar el paquete al lote
+                    string updatePaqueteQuery = "UPDATE paquete SET idLote = @loteId WHERE id = @paqueteId";
+                    using (SqlCommand updatePaqueteCommand = new SqlCommand(updatePaqueteQuery, connection, transaction))
+                    {
+                        updatePaqueteCommand.Parameters.AddWithValue("@loteId", loteId);
+                        updatePaqueteCommand.Parameters.AddWithValue("@paqueteId", paqueteId);
+                        updatePaqueteCommand.ExecuteNonQuery();
+                    }
+                }
+                else
+                {
+                    // Crear un nuevo lote si el actual ha alcanzado su capacidad máxima
+                    int nuevoLoteId = CrearNuevoLote(connection, transaction, provincia);
+
+                    // Asignar el paquete al nuevo lote
+                    string updatePaqueteQuery = "UPDATE paquete SET idLote = @loteId WHERE id = @paqueteId";
+                    using (SqlCommand updatePaqueteCommand = new SqlCommand(updatePaqueteQuery, connection, transaction))
+                    {
+                        updatePaqueteCommand.Parameters.AddWithValue("@loteId", nuevoLoteId);
+                        updatePaqueteCommand.Parameters.AddWithValue("@paqueteId", paqueteId);
+                        updatePaqueteCommand.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+
+
+
+
 
         private void buttonPaqueteFiltrar_Click(object sender, EventArgs e)
         {
@@ -930,7 +999,260 @@ namespace Proyecto_EmpresaPaqueteria
         //                                                                                                                      //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        private void checkBoxLoteEnviados_CheckedChanged(object sender, EventArgs e)
+        {
+            CargarDatoslote();
+        }
 
+        //
+        //el combo box provincia coje los valores del combobox provincia de paquete.
+        //
+
+        private bool CheckMaxMinCapacidad()
+        {
+            int valor = (int)numericUpDownLote.Value;
+            if (valor > 20 || valor < 1)
+            {
+                MessageBox.Show("El valor de carga máxima no puede ser mayor a 20 ni menor a 1.");
+                return false;
+            }
+            return true;
+        }
+
+
+        private void CargarDatoslote()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = checkBoxLoteEnviados.Checked ? "select id, provinciaDestino as provincia, capacidadMaxima as capacidad, enviado from lote where enviado = 1" /*mostrar todos si está marcado checkbox*/ :
+                    "select id, provinciaDestino as provincia, capacidadMaxima as capacidad, enviado from lote where enviado = 0"/*mostrar solo los que estan en alta si no está marcado*/;
+                SqlCommand command = new SqlCommand(query, connection);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+
+                dataGridViewLote.DataSource = dt;
+            }
+        }
+
+
+        private void buttonLoteSubmit_Click(object sender, EventArgs e)
+        {
+            if (CheckMaxMinCapacidad() && comboBoxLoteProvincias.SelectedItem != null)
+            {
+                string provinciaNombre = comboBoxLoteProvincias.SelectedItem.ToString();
+                int capacidadMaxima = (int)numericUpDownLote.Value;
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlTransaction transaction = connection.BeginTransaction();
+
+                    try
+                    {
+                        // Obtener el código postal de la provincia seleccionada
+                        string getCodigoPostalQuery = "SELECT codigo_postal FROM provincias WHERE nombre = @nombre";
+                        string codigoPostal = "";
+                        using (SqlCommand getCodigoPostalCommand = new SqlCommand(getCodigoPostalQuery, connection, transaction))
+                        {
+                            getCodigoPostalCommand.Parameters.AddWithValue("@nombre", provinciaNombre);
+                            codigoPostal = getCodigoPostalCommand.ExecuteScalar().ToString();
+                        }
+
+                        // Obtener el siguiente ID disponible para el lote
+                        string maxLoteIdQuery = "SELECT ISNULL(MAX(id), 0) FROM lote";
+                        int nuevoLoteId;
+                        using (SqlCommand maxLoteIdCommand = new SqlCommand(maxLoteIdQuery, connection, transaction))
+                        {
+                            int maxLoteId = (int)maxLoteIdCommand.ExecuteScalar();
+                            nuevoLoteId = maxLoteId + 1;
+                        }
+
+                        // Insertar el nuevo registro en la tabla lote
+                        string insertLoteQuery = "INSERT INTO lote (id, provinciaDestino, enviado, capacidadMaxima) VALUES (@id, @provinciaDestino, 0, @capacidadMaxima)";
+                        using (SqlCommand insertLoteCommand = new SqlCommand(insertLoteQuery, connection, transaction))
+                        {
+                            insertLoteCommand.Parameters.AddWithValue("@id", nuevoLoteId);
+                            insertLoteCommand.Parameters.AddWithValue("@provinciaDestino", codigoPostal);
+                            insertLoteCommand.Parameters.AddWithValue("@capacidadMaxima", capacidadMaxima);
+                            insertLoteCommand.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show("Error al añadir el nuevo lote: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+
+                // Actualizar los datos en el DataGridView
+                CargarDatoslote();
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione una provincia y asegúrese de que la capacidad máxima sea válida.");
+            }
+        }
+
+        private void buttonLoteEnviar_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                try
+                {
+                    List<int> lotesAEnviar = new List<int>();
+
+                    if (dataGridViewLote.SelectedRows.Count > 0)
+                    {
+                        foreach (DataGridViewRow row in dataGridViewLote.SelectedRows)
+                        {
+                            int loteId = (int)row.Cells["id"].Value;
+                            bool enviado = (bool)row.Cells["enviado"].Value;
+                            if (!enviado)
+                            {
+                                lotesAEnviar.Add(loteId);
+                            }
+                        }
+
+                        if (lotesAEnviar.Count == 0)
+                        {
+                            MessageBox.Show("Los paquetes ya están enviados.");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        string getLotesQuery = "SELECT id FROM lote WHERE enviado = 0";
+                        using (SqlCommand getLotesCommand = new SqlCommand(getLotesQuery, connection, transaction))
+                        {
+                            SqlDataReader reader = getLotesCommand.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                lotesAEnviar.Add((int)reader["id"]);
+                            }
+                            reader.Close();
+                        }
+
+                        if (lotesAEnviar.Count == 0)
+                        {
+                            MessageBox.Show("Los paquetes ya están enviados.");
+                            return;
+                        }
+                    }
+
+                    string getCamionesDisponiblesQuery = "SELECT id_camion, id_chofer FROM chofer_camion WHERE f_fin IS NULL";
+                    List<(string id_camion, string id_chofer)> camionesDisponibles = new List<(string, string)>();
+                    using (SqlCommand getCamionesDisponiblesCommand = new SqlCommand(getCamionesDisponiblesQuery, connection, transaction))
+                    {
+                        SqlDataReader reader = getCamionesDisponiblesCommand.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            camionesDisponibles.Add((reader["id_camion"].ToString(), reader["id_chofer"].ToString()));
+                        }
+                        reader.Close();
+                    }
+
+                    if (camionesDisponibles.Count == 0)
+                    {
+                        MessageBox.Show("No se ha podido realizar el envío por falta de camiones asignados.");
+                        return;
+                    }
+
+                    DateTime fechaEnvio = DateTime.Now;
+                    int camionesUsados = 0;
+
+                    foreach (int loteId in lotesAEnviar)
+                    {
+                        if (camionesUsados >= camionesDisponibles.Count)
+                        {
+                            MessageBox.Show("No se ha podido realizar el envío por falta de camiones asignados.");
+                            break;
+                        }
+
+                        var (id_camion, id_chofer) = camionesDisponibles[camionesUsados];
+
+                        // Añadir registro en la tabla envio
+                        string insertEnvioQuery = "INSERT INTO envio (id, id_camion, id_lote, id_chofer) VALUES (@id, @id_camion, @id_lote, @id_chofer)";
+                        using (SqlCommand insertEnvioCommand = new SqlCommand(insertEnvioQuery, connection, transaction))
+                        {
+                            int nuevoEnvioId = ObtenerSiguienteIdEnvio(connection, transaction); // Método para obtener el siguiente ID disponible para envío
+                            insertEnvioCommand.Parameters.AddWithValue("@id", nuevoEnvioId);
+                            insertEnvioCommand.Parameters.AddWithValue("@id_camion", id_camion);
+                            insertEnvioCommand.Parameters.AddWithValue("@id_lote", loteId);
+                            insertEnvioCommand.Parameters.AddWithValue("@id_chofer", id_chofer);
+                            insertEnvioCommand.ExecuteNonQuery();
+                        }
+
+                        // Marcar lote como enviado
+                        string updateLoteQuery = "UPDATE lote SET enviado = 1 WHERE id = @id";
+                        using (SqlCommand updateLoteCommand = new SqlCommand(updateLoteQuery, connection, transaction))
+                        {
+                            updateLoteCommand.Parameters.AddWithValue("@id", loteId);
+                            updateLoteCommand.ExecuteNonQuery();
+                        }
+
+                        // Actualizar la fecha de fin del chofer_camion
+                        string updateChoferCamionQuery = "UPDATE chofer_camion SET f_fin = @f_fin WHERE id_camion = @id_camion AND id_chofer = @id_chofer AND f_fin IS NULL";
+                        using (SqlCommand updateChoferCamionCommand = new SqlCommand(updateChoferCamionQuery, connection, transaction))
+                        {
+                            updateChoferCamionCommand.Parameters.AddWithValue("@f_fin", fechaEnvio);
+                            updateChoferCamionCommand.Parameters.AddWithValue("@id_camion", id_camion);
+                            updateChoferCamionCommand.Parameters.AddWithValue("@id_chofer", id_chofer);
+                            updateChoferCamionCommand.ExecuteNonQuery();
+                        }
+
+                        camionesUsados++;
+                    }
+
+                    transaction.Commit();
+
+                    if (camionesUsados < lotesAEnviar.Count)
+                    {
+                        MessageBox.Show("No se ha podido realizar el envío por falta de camiones asignados.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Se han enviado los elementos que no lo estaban.");
+                    }
+
+                    CargarDatoslote(); // Actualizar el DataGridView
+                    CargarDatosEnvio();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    MessageBox.Show("Error al enviar los lotes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private int ObtenerSiguienteIdEnvio(SqlConnection connection, SqlTransaction transaction)
+        {
+            string maxEnvioIdQuery = "SELECT ISNULL(MAX(id), 0) FROM envio";
+            using (SqlCommand maxEnvioIdCommand = new SqlCommand(maxEnvioIdQuery, connection, transaction))
+            {
+                int maxEnvioId = (int)maxEnvioIdCommand.ExecuteScalar();
+                return maxEnvioId + 1;
+            }
+        }
+
+        private void buttonLoteFiltrar_Click(object sender, EventArgs e)
+        {
+            FiltrarLote filtrarlote = new FiltrarLote();
+            filtrarlote.FormClosed += new FormClosedEventHandler(FiltrarLotes_FormClosed);
+            filtrarlote.ShowDialog();
+        }
+
+        private void FiltrarLotes_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            CargarDatoslote();
+            CargarDatosEnvio();
+        }
 
 
 
@@ -941,7 +1263,44 @@ namespace Proyecto_EmpresaPaqueteria
         //                                                                                                                      //
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        private void CargarDatosEnvio()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"
+        SELECT e.id as id_envio,
+               e.id_lote ,
+               ca.marca AS marca_camion, 
+               ca.modelo AS modelo_camion, 
+               e.id_camion AS Matricula, 
+               ch.nombre AS nombre_chofer, 
+               ch.telefono AS telefono, 
+               e.id_chofer AS DNI_Chofer
+        FROM envio e
+        JOIN chofer ch ON e.id_chofer = ch.dni
+        JOIN camion ca ON e.id_camion = ca.matricula";
+                SqlCommand command = new SqlCommand(query, connection);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
 
+                dataGridViewEnvio.DataSource = dt;
+            }
+
+        }
+
+        private void buttonEnvioFiltrar_Click(object sender, EventArgs e)
+        {
+            FiltrarEnvio filtrarEnvio = new FiltrarEnvio();
+            filtrarEnvio.FormClosed += new FormClosedEventHandler(FiltrarEnvio_FormClosed);
+            filtrarEnvio.ShowDialog();
+        }
+
+        private void FiltrarEnvio_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            CargarDatosEnvio();
+        }
 
 
 
@@ -1013,7 +1372,7 @@ namespace Proyecto_EmpresaPaqueteria
             }
         }
 
-       
+        
     }
 
 }
