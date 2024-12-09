@@ -8,6 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System;
+using System.IO;
+using System.Windows.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 
 namespace Proyecto_EmpresaPaqueteria
 {
@@ -18,10 +24,15 @@ namespace Proyecto_EmpresaPaqueteria
         public Form1()
         {
             InitializeComponent();
+            GenerateJsonFile();
+            LoadJsonData();
+            LoadLabels();
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             CargarDatosCamion();
             CargarDatosChofer();
             CargarDatosAsignarCamion();
@@ -912,9 +923,101 @@ namespace Proyecto_EmpresaPaqueteria
         {
             CargarDatosPaquete();
         }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //                                                                                                                      //
+        //                                                     ventana lote                                                     //
+        //                                                                                                                      //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //                                                                                                                      //
+        //                                                    ventana envio                                                     //
+        //                                                                                                                      //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //                                                                                                                      //
+        //                                                  ventana a cerca de                                                  //
+        //                                                                                                                      //
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private dynamic _data;
+        private const string JsonFilePath = "data.json";
+
+       
+        private void GenerateJsonFile()
+        {
+            var data = new
+            {
+                titulo = "Proyecto desarrollado por José Martín Arance",
+                asignatura = "Desarrollo de interfaces",
+                fechaProduccion = "9 de Diciembre del 2024"
+            };
+            var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
+            File.WriteAllText(JsonFilePath, jsonData);
+        }
+
+        private void LoadJsonData() 
+        {
+            try
+            {
+                if (File.Exists(JsonFilePath))
+                {
+                    string jsonData = File.ReadAllText(JsonFilePath);
+                    _data = JObject.Parse(jsonData);
+                }
+                else
+                {
+                    MessageBox.Show("El archivo JSON no se encuentra.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar el archivo JSON: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadLabels()
+        {
+            if (_data != null)
+            {
+                try
+                {
+                    labelJsonTitulo.Text = _data["titulo"].ToString();
+                    labelJsonAsignatura.Text = _data["asignatura"].ToString();
+                    labelJsonFecha.Text = _data["fechaProduccion"].ToString();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al cargar el texto: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Los datos no se han cargado correctamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+       
     }
 
 }
+
 
 
 

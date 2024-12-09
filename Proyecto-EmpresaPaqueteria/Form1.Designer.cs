@@ -79,6 +79,10 @@
             this.textBoxPaqueteProducto = new System.Windows.Forms.TextBox();
             this.tabPageLote = new System.Windows.Forms.TabPage();
             this.tabPageEnvio = new System.Windows.Forms.TabPage();
+            this.tabPageACercaDe = new System.Windows.Forms.TabPage();
+            this.labelJsonTitulo = new System.Windows.Forms.Label();
+            this.labelJsonAsignatura = new System.Windows.Forms.Label();
+            this.labelJsonFecha = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageCamion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCamion)).BeginInit();
@@ -88,6 +92,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAsignarCamion)).BeginInit();
             this.tabPagePaquete.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPaquete)).BeginInit();
+            this.tabPageACercaDe.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -98,6 +103,7 @@
             this.tabControl1.Controls.Add(this.tabPagePaquete);
             this.tabControl1.Controls.Add(this.tabPageLote);
             this.tabControl1.Controls.Add(this.tabPageEnvio);
+            this.tabControl1.Controls.Add(this.tabPageACercaDe);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
@@ -107,6 +113,7 @@
             // 
             // tabPageCamion
             // 
+            this.tabPageCamion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tabPageCamion.Controls.Add(this.buttonCamionDelete);
             this.tabPageCamion.Controls.Add(this.buttonCamionFiltrar);
             this.tabPageCamion.Controls.Add(this.buttonCamionSubmit);
@@ -239,6 +246,7 @@
             // 
             // tabPageChofer
             // 
+            this.tabPageChofer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tabPageChofer.Controls.Add(this.buttonChoferAltaBaja);
             this.tabPageChofer.Controls.Add(this.buttonChoferFiltrar);
             this.tabPageChofer.Controls.Add(this.buttonChoferSubmit);
@@ -415,6 +423,7 @@
             // 
             // tabPageChoferCamion
             // 
+            this.tabPageChoferCamion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tabPageChoferCamion.Controls.Add(this.buttonAsignarCamion_Liberar);
             this.tabPageChoferCamion.Controls.Add(this.buttonAsignarCamion_Filtrar);
             this.tabPageChoferCamion.Controls.Add(this.buttonAsignarCamion_Submit);
@@ -534,6 +543,7 @@
             // 
             // tabPagePaquete
             // 
+            this.tabPagePaquete.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tabPagePaquete.Controls.Add(this.buttonPaqueteAsignar);
             this.tabPagePaquete.Controls.Add(this.buttonPaqueteFiltrar);
             this.tabPagePaquete.Controls.Add(this.buttonPaqueteApañadir);
@@ -651,6 +661,7 @@
             // 
             // tabPageLote
             // 
+            this.tabPageLote.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tabPageLote.Location = new System.Drawing.Point(4, 25);
             this.tabPageLote.Name = "tabPageLote";
             this.tabPageLote.Padding = new System.Windows.Forms.Padding(3);
@@ -661,6 +672,7 @@
             // 
             // tabPageEnvio
             // 
+            this.tabPageEnvio.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tabPageEnvio.Location = new System.Drawing.Point(4, 25);
             this.tabPageEnvio.Name = "tabPageEnvio";
             this.tabPageEnvio.Padding = new System.Windows.Forms.Padding(3);
@@ -668,6 +680,48 @@
             this.tabPageEnvio.TabIndex = 5;
             this.tabPageEnvio.Text = "Envio";
             this.tabPageEnvio.UseVisualStyleBackColor = true;
+            // 
+            // tabPageACercaDe
+            // 
+            this.tabPageACercaDe.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPageACercaDe.Controls.Add(this.labelJsonFecha);
+            this.tabPageACercaDe.Controls.Add(this.labelJsonAsignatura);
+            this.tabPageACercaDe.Controls.Add(this.labelJsonTitulo);
+            this.tabPageACercaDe.Location = new System.Drawing.Point(4, 25);
+            this.tabPageACercaDe.Name = "tabPageACercaDe";
+            this.tabPageACercaDe.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageACercaDe.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tabPageACercaDe.Size = new System.Drawing.Size(1113, 397);
+            this.tabPageACercaDe.TabIndex = 6;
+            this.tabPageACercaDe.Text = "A cerca de";
+            this.tabPageACercaDe.UseVisualStyleBackColor = true;
+            // 
+            // labelJsonTitulo
+            // 
+            this.labelJsonTitulo.AutoSize = true;
+            this.labelJsonTitulo.Location = new System.Drawing.Point(405, 97);
+            this.labelJsonTitulo.Name = "labelJsonTitulo";
+            this.labelJsonTitulo.Size = new System.Drawing.Size(99, 16);
+            this.labelJsonTitulo.TabIndex = 1;
+            this.labelJsonTitulo.Text = "labelJsonTitulo";
+            // 
+            // labelJsonAsignatura
+            // 
+            this.labelJsonAsignatura.AutoSize = true;
+            this.labelJsonAsignatura.Location = new System.Drawing.Point(405, 139);
+            this.labelJsonAsignatura.Name = "labelJsonAsignatura";
+            this.labelJsonAsignatura.Size = new System.Drawing.Size(130, 16);
+            this.labelJsonAsignatura.TabIndex = 1;
+            this.labelJsonAsignatura.Text = "labelJsonAsignatura";
+            // 
+            // labelJsonFecha
+            // 
+            this.labelJsonFecha.AutoSize = true;
+            this.labelJsonFecha.Location = new System.Drawing.Point(405, 182);
+            this.labelJsonFecha.Name = "labelJsonFecha";
+            this.labelJsonFecha.Size = new System.Drawing.Size(104, 16);
+            this.labelJsonFecha.TabIndex = 1;
+            this.labelJsonFecha.Text = "labelJsonFecha";
             // 
             // Form1
             // 
@@ -691,6 +745,8 @@
             this.tabPagePaquete.ResumeLayout(false);
             this.tabPagePaquete.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPaquete)).EndInit();
+            this.tabPageACercaDe.ResumeLayout(false);
+            this.tabPageACercaDe.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -748,6 +804,10 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button buttonPaqueteAsignar;
         private System.Windows.Forms.Button buttonPaqueteFiltrar;
+        private System.Windows.Forms.TabPage tabPageACercaDe;
+        private System.Windows.Forms.Label labelJsonTitulo;
+        private System.Windows.Forms.Label labelJsonFecha;
+        private System.Windows.Forms.Label labelJsonAsignatura;
     }
 }
 
