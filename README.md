@@ -1,4 +1,4 @@
--📔La base de datos se ha relizadoen microsoft sql server📔
+-📔La base de datos se ha relizadoen microsoft sql server:  EmpresaPaqueteria.back📔
 
 -🔗La cadena de conexión se realiza en el localhost con la autenticacion de windows🔗
 
