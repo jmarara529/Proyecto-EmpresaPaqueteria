@@ -78,11 +78,7 @@
             this.comboBoxPaqueteProvincia = new System.Windows.Forms.ComboBox();
             this.textBoxPaqueteProducto = new System.Windows.Forms.TextBox();
             this.tabPageLote = new System.Windows.Forms.TabPage();
-            this.tabPageEnvio = new System.Windows.Forms.TabPage();
-            this.tabPageACercaDe = new System.Windows.Forms.TabPage();
-            this.labelJsonTitulo = new System.Windows.Forms.Label();
-            this.labelJsonAsignatura = new System.Windows.Forms.Label();
-            this.labelJsonFecha = new System.Windows.Forms.Label();
+            this.numericUpDownLote = new System.Windows.Forms.NumericUpDown();
             this.buttonLoteEnviar = new System.Windows.Forms.Button();
             this.buttonLoteFiltrar = new System.Windows.Forms.Button();
             this.buttonLoteSubmit = new System.Windows.Forms.Button();
@@ -91,9 +87,13 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.comboBoxLoteProvincias = new System.Windows.Forms.ComboBox();
-            this.numericUpDownLote = new System.Windows.Forms.NumericUpDown();
-            this.dataGridViewEnvio = new System.Windows.Forms.DataGridView();
+            this.tabPageEnvio = new System.Windows.Forms.TabPage();
             this.buttonEnvioFiltrar = new System.Windows.Forms.Button();
+            this.dataGridViewEnvio = new System.Windows.Forms.DataGridView();
+            this.tabPageACercaDe = new System.Windows.Forms.TabPage();
+            this.labelJsonFecha = new System.Windows.Forms.Label();
+            this.labelJsonAsignatura = new System.Windows.Forms.Label();
+            this.labelJsonTitulo = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageCamion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCamion)).BeginInit();
@@ -104,11 +104,11 @@
             this.tabPagePaquete.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPaquete)).BeginInit();
             this.tabPageLote.SuspendLayout();
-            this.tabPageEnvio.SuspendLayout();
-            this.tabPageACercaDe.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLote)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLote)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLote)).BeginInit();
+            this.tabPageEnvio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnvio)).BeginInit();
+            this.tabPageACercaDe.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -180,6 +180,7 @@
             this.buttonCamionSubmit.TabIndex = 4;
             this.buttonCamionSubmit.Text = "Añadir";
             this.buttonCamionSubmit.UseVisualStyleBackColor = true;
+            this.buttonCamionSubmit.Click += new System.EventHandler(this.buttonCamionSubmit_Click);
             // 
             // dataGridViewCamion
             // 
@@ -192,7 +193,7 @@
             this.dataGridViewCamion.ReadOnly = true;
             this.dataGridViewCamion.Size = new System.Drawing.Size(754, 247);
             this.dataGridViewCamion.TabIndex = 6;
-            this.dataGridViewCamion.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCamion_CellContentClick);
+            this.dataGridViewCamion.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCamion_CellContentClick);
             // 
             // textBoxMatricula
             // 
@@ -331,7 +332,7 @@
             this.dataGridViewChofer.ReadOnly = true;
             this.dataGridViewChofer.Size = new System.Drawing.Size(787, 288);
             this.dataGridViewChofer.TabIndex = 3;
-            this.dataGridViewChofer.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewChofer_CellContentClick);
+            this.dataGridViewChofer.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewChofer_CellContentClick);
             // 
             // checkBoxChoferMostrarBajas
             // 
@@ -695,60 +696,28 @@
             this.tabPageLote.Text = "Lote";
             this.tabPageLote.UseVisualStyleBackColor = true;
             // 
-            // tabPageEnvio
+            // numericUpDownLote
             // 
-            this.tabPageEnvio.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tabPageEnvio.Controls.Add(this.buttonEnvioFiltrar);
-            this.tabPageEnvio.Controls.Add(this.dataGridViewEnvio);
-            this.tabPageEnvio.Location = new System.Drawing.Point(4, 25);
-            this.tabPageEnvio.Name = "tabPageEnvio";
-            this.tabPageEnvio.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEnvio.Size = new System.Drawing.Size(1113, 397);
-            this.tabPageEnvio.TabIndex = 5;
-            this.tabPageEnvio.Text = "Envio";
-            this.tabPageEnvio.UseVisualStyleBackColor = true;
-            // 
-            // tabPageACercaDe
-            // 
-            this.tabPageACercaDe.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tabPageACercaDe.Controls.Add(this.labelJsonFecha);
-            this.tabPageACercaDe.Controls.Add(this.labelJsonAsignatura);
-            this.tabPageACercaDe.Controls.Add(this.labelJsonTitulo);
-            this.tabPageACercaDe.Location = new System.Drawing.Point(4, 25);
-            this.tabPageACercaDe.Name = "tabPageACercaDe";
-            this.tabPageACercaDe.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageACercaDe.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tabPageACercaDe.Size = new System.Drawing.Size(1113, 397);
-            this.tabPageACercaDe.TabIndex = 6;
-            this.tabPageACercaDe.Text = "A cerca de";
-            this.tabPageACercaDe.UseVisualStyleBackColor = true;
-            // 
-            // labelJsonTitulo
-            // 
-            this.labelJsonTitulo.AutoSize = true;
-            this.labelJsonTitulo.Location = new System.Drawing.Point(405, 97);
-            this.labelJsonTitulo.Name = "labelJsonTitulo";
-            this.labelJsonTitulo.Size = new System.Drawing.Size(99, 16);
-            this.labelJsonTitulo.TabIndex = 1;
-            this.labelJsonTitulo.Text = "labelJsonTitulo";
-            // 
-            // labelJsonAsignatura
-            // 
-            this.labelJsonAsignatura.AutoSize = true;
-            this.labelJsonAsignatura.Location = new System.Drawing.Point(405, 139);
-            this.labelJsonAsignatura.Name = "labelJsonAsignatura";
-            this.labelJsonAsignatura.Size = new System.Drawing.Size(130, 16);
-            this.labelJsonAsignatura.TabIndex = 1;
-            this.labelJsonAsignatura.Text = "labelJsonAsignatura";
-            // 
-            // labelJsonFecha
-            // 
-            this.labelJsonFecha.AutoSize = true;
-            this.labelJsonFecha.Location = new System.Drawing.Point(405, 182);
-            this.labelJsonFecha.Name = "labelJsonFecha";
-            this.labelJsonFecha.Size = new System.Drawing.Size(104, 16);
-            this.labelJsonFecha.TabIndex = 1;
-            this.labelJsonFecha.Text = "labelJsonFecha";
+            this.numericUpDownLote.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownLote.Location = new System.Drawing.Point(186, 206);
+            this.numericUpDownLote.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.numericUpDownLote.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownLote.Name = "numericUpDownLote";
+            this.numericUpDownLote.Size = new System.Drawing.Size(74, 29);
+            this.numericUpDownLote.TabIndex = 15;
+            this.numericUpDownLote.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             // 
             // buttonLoteEnviar
             // 
@@ -839,28 +808,28 @@
             this.comboBoxLoteProvincias.Size = new System.Drawing.Size(160, 32);
             this.comboBoxLoteProvincias.TabIndex = 7;
             // 
-            // numericUpDownLote
+            // tabPageEnvio
             // 
-            this.numericUpDownLote.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownLote.Location = new System.Drawing.Point(186, 206);
-            this.numericUpDownLote.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.numericUpDownLote.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownLote.Name = "numericUpDownLote";
-            this.numericUpDownLote.Size = new System.Drawing.Size(74, 29);
-            this.numericUpDownLote.TabIndex = 15;
-            this.numericUpDownLote.Value = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
+            this.tabPageEnvio.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPageEnvio.Controls.Add(this.buttonEnvioFiltrar);
+            this.tabPageEnvio.Controls.Add(this.dataGridViewEnvio);
+            this.tabPageEnvio.Location = new System.Drawing.Point(4, 25);
+            this.tabPageEnvio.Name = "tabPageEnvio";
+            this.tabPageEnvio.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageEnvio.Size = new System.Drawing.Size(1113, 397);
+            this.tabPageEnvio.TabIndex = 5;
+            this.tabPageEnvio.Text = "Envio";
+            this.tabPageEnvio.UseVisualStyleBackColor = true;
+            // 
+            // buttonEnvioFiltrar
+            // 
+            this.buttonEnvioFiltrar.Location = new System.Drawing.Point(6, 344);
+            this.buttonEnvioFiltrar.Name = "buttonEnvioFiltrar";
+            this.buttonEnvioFiltrar.Size = new System.Drawing.Size(1097, 43);
+            this.buttonEnvioFiltrar.TabIndex = 1;
+            this.buttonEnvioFiltrar.Text = "Filtrar";
+            this.buttonEnvioFiltrar.UseVisualStyleBackColor = true;
+            this.buttonEnvioFiltrar.Click += new System.EventHandler(this.buttonEnvioFiltrar_Click);
             // 
             // dataGridViewEnvio
             // 
@@ -875,15 +844,47 @@
             this.dataGridViewEnvio.Size = new System.Drawing.Size(1097, 332);
             this.dataGridViewEnvio.TabIndex = 0;
             // 
-            // buttonEnvioFiltrar
+            // tabPageACercaDe
             // 
-            this.buttonEnvioFiltrar.Location = new System.Drawing.Point(6, 344);
-            this.buttonEnvioFiltrar.Name = "buttonEnvioFiltrar";
-            this.buttonEnvioFiltrar.Size = new System.Drawing.Size(1097, 43);
-            this.buttonEnvioFiltrar.TabIndex = 1;
-            this.buttonEnvioFiltrar.Text = "Filtrar";
-            this.buttonEnvioFiltrar.UseVisualStyleBackColor = true;
-            this.buttonEnvioFiltrar.Click += new System.EventHandler(this.buttonEnvioFiltrar_Click);
+            this.tabPageACercaDe.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPageACercaDe.Controls.Add(this.labelJsonFecha);
+            this.tabPageACercaDe.Controls.Add(this.labelJsonAsignatura);
+            this.tabPageACercaDe.Controls.Add(this.labelJsonTitulo);
+            this.tabPageACercaDe.Location = new System.Drawing.Point(4, 25);
+            this.tabPageACercaDe.Name = "tabPageACercaDe";
+            this.tabPageACercaDe.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageACercaDe.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tabPageACercaDe.Size = new System.Drawing.Size(1113, 397);
+            this.tabPageACercaDe.TabIndex = 6;
+            this.tabPageACercaDe.Text = "A cerca de";
+            this.tabPageACercaDe.UseVisualStyleBackColor = true;
+            // 
+            // labelJsonFecha
+            // 
+            this.labelJsonFecha.AutoSize = true;
+            this.labelJsonFecha.Location = new System.Drawing.Point(405, 182);
+            this.labelJsonFecha.Name = "labelJsonFecha";
+            this.labelJsonFecha.Size = new System.Drawing.Size(104, 16);
+            this.labelJsonFecha.TabIndex = 1;
+            this.labelJsonFecha.Text = "labelJsonFecha";
+            // 
+            // labelJsonAsignatura
+            // 
+            this.labelJsonAsignatura.AutoSize = true;
+            this.labelJsonAsignatura.Location = new System.Drawing.Point(405, 139);
+            this.labelJsonAsignatura.Name = "labelJsonAsignatura";
+            this.labelJsonAsignatura.Size = new System.Drawing.Size(130, 16);
+            this.labelJsonAsignatura.TabIndex = 1;
+            this.labelJsonAsignatura.Text = "labelJsonAsignatura";
+            // 
+            // labelJsonTitulo
+            // 
+            this.labelJsonTitulo.AutoSize = true;
+            this.labelJsonTitulo.Location = new System.Drawing.Point(405, 97);
+            this.labelJsonTitulo.Name = "labelJsonTitulo";
+            this.labelJsonTitulo.Size = new System.Drawing.Size(99, 16);
+            this.labelJsonTitulo.TabIndex = 1;
+            this.labelJsonTitulo.Text = "labelJsonTitulo";
             // 
             // Form1
             // 
@@ -909,12 +910,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPaquete)).EndInit();
             this.tabPageLote.ResumeLayout(false);
             this.tabPageLote.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLote)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLote)).EndInit();
             this.tabPageEnvio.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnvio)).EndInit();
             this.tabPageACercaDe.ResumeLayout(false);
             this.tabPageACercaDe.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLote)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLote)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnvio)).EndInit();
             this.ResumeLayout(false);
 
         }

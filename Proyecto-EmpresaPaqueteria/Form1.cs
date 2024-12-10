@@ -434,7 +434,7 @@ namespace Proyecto_EmpresaPaqueteria
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT matricula FROM camion";
+                string query = "SELECT matricula FROM camion where baja = 0";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -452,7 +452,7 @@ namespace Proyecto_EmpresaPaqueteria
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT dni FROM chofer";
+                string query = "SELECT dni FROM chofer where baja = 0";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -1222,6 +1222,7 @@ namespace Proyecto_EmpresaPaqueteria
 
                     CargarDatoslote(); // Actualizar el DataGridView
                     CargarDatosEnvio();
+                    CargarDatosAsignarCamion();
                 }
                 catch (Exception ex)
                 {
